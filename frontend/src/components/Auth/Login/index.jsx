@@ -8,7 +8,7 @@ const Login = () => {
 
   console.log(1);
 
-  return <div>glkdfsnkdsfmnmdsaf,dsafm,ndsafm,nsadfm,ndsam,nfsa,mfsa.</div>;
+  return <div>glkdfsnkdsfmnmdsaf,dsafm,ndsafm,nsadfm,ndsam,nfsa,mfsa</div>;
 };
 
 export default Login;
