@@ -2,10 +2,9 @@ import { LinearProgress } from "@material-ui/core";
 import { StylesProvider } from "@material-ui/styles";
 import React, { Suspense } from "react";
 import { render } from "react-dom";
-import { Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import Browser from "./components/Browser";
 import Root from "./components/Root";
-import { history } from "./historyInstance";
 
 let isAsync = true;
 
@@ -19,7 +18,7 @@ try {
 
 render(
   isAsync ? (
-    <Router history={history}>
+    <Router>
       <StylesProvider>
         <Suspense fallback={<LinearProgress />}>
           <Root />
