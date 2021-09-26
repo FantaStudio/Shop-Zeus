@@ -15,6 +15,17 @@ const useStyles = makeStyles({
       fontFamily: "'Montserrat', sans-serif",
       backgroundColor: "#f1f1f5",
     },
+    header: {
+      backgroundColor: "#fff",
+      padding: "15px 20px",
+      position: "fixed",
+      width: "100%",
+    },
+    footer: {
+      backgroundColor: "#333",
+      padding: "15px 20px",
+      borderRadius: "1.6rem 1.6rem 0 0",
+    },
     html: {
       margin: 0,
     },
@@ -30,7 +41,12 @@ const useStyles = makeStyles({
     h3: {
       fontWeight: 700,
     },
-
+    main: {
+      display: "flex",
+      flexDirection: "column",
+      flexGrow: 1,
+      height: "100vh",
+    },
     img: {
       maxWidth: "100%",
     },
@@ -42,6 +58,38 @@ const useStyles = makeStyles({
       flexDirection: "column",
       flexGrow: 1,
       height: "100vh",
+    },
+    "#main-content": {
+      width: 1600,
+      margin: "0 auto",
+
+      "@media (max-width: 1824px)": {
+        width: 1400,
+      },
+
+      "@media (max-width: 1624px)": {
+        width: 1200,
+      },
+
+      "@media (max-width: 1424px)": {
+        width: 1000,
+      },
+
+      "@media (max-width: 1224px)": {
+        width: 800,
+      },
+
+      "@media (max-width: 1024px)": {
+        width: 600,
+      },
+
+      "@media (max-width: 768px)": {
+        width: "100%",
+      },
+
+      "@media (max-width: 320px)": {
+        width: "100%",
+      },
     },
     a: {
       cursor: "pointer",
@@ -60,9 +108,11 @@ const Root = () => {
     <>
       <Header />
 
-      <Suspense fallback={<LinearProgress />}>
-        <SwitchRoutes routes={Routes} />
-      </Suspense>
+      <main id="main-content">
+        <Suspense fallback={<LinearProgress />}>
+          <SwitchRoutes routes={Routes} />
+        </Suspense>
+      </main>
 
       <Footer />
     </>
