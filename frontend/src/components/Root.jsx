@@ -104,6 +104,10 @@ const useStyles = makeStyles({
 const Root = () => {
   useStyles();
 
+  /* Zeus  */
+
+  /* Для элементов формы (кнопки, например) использоваться лазурный цвет ,hex: #007fff */
+
   return (
     <>
       <Header />
