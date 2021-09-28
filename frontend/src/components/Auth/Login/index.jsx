@@ -1,14 +1,26 @@
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
-import { useLocation } from "react-router-dom";
+
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
 
 const Login = () => {
-  const location = useLocation();
+  /* const location = useLocation(); */
+  const classes = useStyles();
 
-  console.log(location?.state);
-
-  console.log(1);
-
-  return <div>glkdfsnkdsfmnmdsaf,dsafm,ndsafm,nsadfm,ndsam,nfsa,mfsa</div>;
+  return (
+    <div className={classes.root}>
+      <div>glkdfsnkdsfmnmdsaf,dsafm,ndsafm,nsadfm,ndsam,nfsa,mfsa</div>
+    </div>
+  );
 };
 
 export default Login;

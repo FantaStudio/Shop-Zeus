@@ -1,6 +1,7 @@
 import { LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { Suspense } from "react";
+import { useLocation } from "react-router-dom";
 import { Routes } from "../routing/Routes";
 import SwitchRoutes from "../routing/SwitchRoutes";
 import Footer from "./Footer";
@@ -17,9 +18,10 @@ const useStyles = makeStyles({
     },
     header: {
       backgroundColor: "#fff",
-      padding: "15px 20px",
-      position: "fixed",
+      padding: "1rem 0rem",
+      position: "sticky",
       width: "100%",
+      top: 0,
     },
     footer: {
       backgroundColor: "#333",
@@ -103,6 +105,7 @@ const useStyles = makeStyles({
 
 const Root = () => {
   useStyles();
+  const location = useLocation();
 
   /* Zeus  */
 
