@@ -18,14 +18,14 @@ const useStyles = makeStyles({
     },
     header: {
       backgroundColor: "#fff",
-      padding: "1rem 0rem",
+      padding: ".7rem 0rem",
       position: "sticky",
       width: "100%",
       top: 0,
     },
     footer: {
       backgroundColor: "#333",
-      padding: "15px 20px",
+      padding: ".7rem 0rem",
       borderRadius: "1.6rem 1.6rem 0 0",
     },
     html: {
@@ -54,6 +54,9 @@ const useStyles = makeStyles({
     },
     "#component-error-text": {
       color: "red",
+    },
+    ".MuiOutlinedInput-input": {
+      padding: ".7rem .4rem",
     },
     "#root": {
       display: "flex",
