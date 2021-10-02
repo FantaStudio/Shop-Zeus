@@ -2,8 +2,8 @@ import { LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { Suspense } from "react";
 import { useLocation } from "react-router-dom";
-import { Routes } from "../routing/Routes";
-import SwitchRoutes from "../routing/SwitchRoutes";
+import { Routes } from "../../routing/Routes";
+import SwitchRoutes from "../../routing/SwitchRoutes";
 import Footer from "./Footer";
 import Header from "./Header";
 
