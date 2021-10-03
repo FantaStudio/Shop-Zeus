@@ -22,6 +22,7 @@ const useStyles = makeStyles({
       width: "100%",
       top: 0,
       marginBottom: "1rem",
+      zIndex: 999999,
     },
 
     html: {
