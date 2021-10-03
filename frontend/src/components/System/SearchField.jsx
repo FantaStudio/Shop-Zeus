@@ -1,22 +1,53 @@
-import { InputAdornment, TextField } from "@material-ui/core";
-import { Search } from "@material-ui/icons";
-import React, { useCallback, useEffect, useState } from "react";
-import ZeusButton from "./ZeusButton";
+import { TextField } from "@material-ui/core";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import { useDebounce } from "../../hooks/useDebounce";
+
+let isChanged = false;
 
 const SearchField = ({ onSearch, defaultValue, placeholder }) => {
   const [value, setValue] = useState(defaultValue);
+
+  const debouncedValue = useDebounce(value, 500);
+
+  const isLoad = useRef(false);
 
   useEffect(() => {
     setValue(defaultValue);
   }, [defaultValue]);
 
   const onChange = (event) => {
+    isLoad.current = true;
+
     setValue(event.target.value);
+
+    isChanged = true;
   };
 
-  const fetch = useCallback(() => {
-    onSearch(value);
-  }, [onSearch, value]);
+  const fetch = useCallback(
+    (debouncedValue) => {
+      onSearch(debouncedValue);
+    },
+    [onSearch]
+  );
+
+  useEffect(() => {
+    if (isChanged && isLoad.current) {
+      isLoad.current = false;
+      fetch(debouncedValue);
+    }
+  }, [fetch, debouncedValue]);
+
+  useLayoutEffect(() => {
+    return () => {
+      isChanged = false;
+    };
+  }, []);
 
   return (
     <TextField
@@ -25,22 +56,6 @@ const SearchField = ({ onSearch, defaultValue, placeholder }) => {
       inputProps={{ "aria-label": "поиск" }}
       variant="outlined"
       onChange={onChange}
-      style={{ padding: 0 }}
-      InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-            <ZeusButton
-              style={{
-                height: 30,
-                minWidth: 30,
-              }}
-              onClick={fetch}
-            >
-              <Search />
-            </ZeusButton>
-          </InputAdornment>
-        ),
-      }}
       fullWidth
     />
   );
