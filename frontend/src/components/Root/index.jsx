@@ -4,7 +4,6 @@ import React, { Suspense } from "react";
 import { useLocation } from "react-router-dom";
 import { Routes } from "../../routing/Routes";
 import SwitchRoutes from "../../routing/SwitchRoutes";
-import Footer from "./Footer";
 import Header from "./Header";
 
 const useStyles = makeStyles({
@@ -22,12 +21,9 @@ const useStyles = makeStyles({
       position: "sticky",
       width: "100%",
       top: 0,
+      marginBottom: "1rem",
     },
-    footer: {
-      backgroundColor: "#333",
-      padding: ".7rem 0rem",
-      borderRadius: "1.6rem 1.6rem 0 0",
-    },
+
     html: {
       margin: 0,
     },
@@ -123,8 +119,6 @@ const Root = () => {
           <SwitchRoutes routes={Routes} />
         </Suspense>
       </main>
-
-      <Footer />
     </>
   );
 };

@@ -1,10 +1,11 @@
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
+import { secondaryThemeColor } from "../../helpers/colors";
 
 const useStyles = makeStyles({
   root: {
-    backgroundColor: "#007fff",
+    backgroundColor: secondaryThemeColor,
     borderRadius: "1rem",
     color: "#f2f3f4",
     height: "auto",
