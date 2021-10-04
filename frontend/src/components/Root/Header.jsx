@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { ShoppingBasket } from "@material-ui/icons";
+import { ExitToApp, ShoppingBasket } from "@material-ui/icons";
 import { view } from "@risingstack/react-easy-state";
 import React from "react";
 import { secondaryThemeColor } from "../../helpers/colors";
@@ -20,6 +20,9 @@ const useStyles = makeStyles({
     cursor: "pointer",
     color: secondaryThemeColor,
   },
+  icons: {
+    display: "flex",
+  },
 });
 
 const Header = view(() => {
@@ -31,21 +34,29 @@ const Header = view(() => {
         <div className={classes.root}>
           <Logo />
 
-          {auth?.profile && (
-            <div className={classes.iconBasket}>
-              <ShoppingBasket
-                fontSize="large"
-                style={{ marginRight: ".1rem" }}
-              />
-              Корзина
-            </div>
-          )}
+          <div className={classes.icons}>
+            {auth?.profile && (
+              <div className={classes.iconBasket}>
+                <ShoppingBasket
+                  fontSize="large"
+                  style={{ marginRight: ".1rem" }}
+                />
+                Корзина
+              </div>
+            )}
 
-          {!auth?.profile && (
-            <div>
-              <ZeusButton>Войти</ZeusButton>
-            </div>
-          )}
+            {auth?.profile && (
+              <div className={classes.iconBasket}>
+                <ExitToApp fontSize="large" style={{ marginRight: ".1rem" }} />
+              </div>
+            )}
+
+            {!auth?.profile && (
+              <div>
+                <ZeusButton>Войти</ZeusButton>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>

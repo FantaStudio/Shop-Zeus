@@ -15,6 +15,10 @@ const useStyles = makeStyles({
     display: "grid",
     gridTemplateColumns: "375px 1fr",
     gridGap: "10px",
+
+    "@media (max-width: 850px)": {
+      gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))",
+    },
   },
   gridPhones: {
     display: "grid",

@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { ShoppingBasket } from "@material-ui/icons";
 import React, { memo } from "react";
+import { Link } from "react-router-dom";
 import { secondaryThemeColor } from "./../../../helpers/colors";
 import ZeusButton from "./../../System/ZeusButton";
 
@@ -68,7 +69,9 @@ const Item = memo(({ showType, phone }) => {
           showType === "Grid" ? classes.nameBlockGrid : classes.nameBlock
         }
       >
-        <p style={showType === "Grid" ? { margin: 3 } : {}}>{phone?.name}</p>
+        <p style={showType === "Grid" ? { margin: 3 } : {}}>
+          <Link style={{ color: secondaryThemeColor }}>{phone?.name}</Link>{" "}
+        </p>
       </div>
 
       <div
