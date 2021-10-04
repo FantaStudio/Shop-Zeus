@@ -70,7 +70,12 @@ const Item = memo(({ showType, phone }) => {
         }
       >
         <p style={showType === "Grid" ? { margin: 3 } : {}}>
-          <Link style={{ color: secondaryThemeColor }}>{phone?.name}</Link>{" "}
+          <Link
+            to={`/phone/${phone?.id}`}
+            style={{ color: secondaryThemeColor }}
+          >
+            {phone?.name}
+          </Link>{" "}
         </p>
       </div>
 

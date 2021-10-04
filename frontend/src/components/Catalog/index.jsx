@@ -86,7 +86,7 @@ const Catalog = () => {
       <div className={classes.content}>
         <Filters />
 
-        <div className={showType === "Grid" && classes.gridPhones}>
+        <div className={showType === "Grid" ? classes.gridPhones : null}>
           {mapFakeOptions}
         </div>
       </div>
