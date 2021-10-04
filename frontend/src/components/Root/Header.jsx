@@ -35,15 +35,13 @@ const Header = view(() => {
           <Logo />
 
           <div className={classes.icons}>
-            {auth?.profile && (
-              <div className={classes.iconBasket}>
-                <ShoppingBasket
-                  fontSize="large"
-                  style={{ marginRight: ".1rem" }}
-                />
-                Корзина
-              </div>
-            )}
+            <div className={classes.iconBasket}>
+              <ShoppingBasket
+                fontSize="large"
+                style={{ marginRight: ".1rem" }}
+              />
+              Корзина
+            </div>
 
             {auth?.profile && (
               <div className={classes.iconBasket}>
