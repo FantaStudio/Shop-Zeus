@@ -54,6 +54,7 @@ const SearchField = ({ onSearch, defaultValue, placeholder }) => {
       placeholder={placeholder || "Поиск..."}
       value={value || ""}
       inputProps={{ "aria-label": "поиск" }}
+      style={{ fontFamily: "'Montserrat', sans-serif" }}
       variant="outlined"
       onChange={onChange}
       fullWidth

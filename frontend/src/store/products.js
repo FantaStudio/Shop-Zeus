@@ -2,6 +2,16 @@ import { store } from "@risingstack/react-easy-state";
 
 const products = store({
   loading: false,
+  manufactures: [
+    "Apple",
+    "BQ",
+    "DEXP",
+    "Samsung",
+    "Xiaomi",
+    "Huawei",
+    "HONOR",
+    "OPPO",
+  ],
   items: [],
   pages: 1,
   params: {
@@ -13,8 +23,11 @@ const products = store({
     haveInMarket: undefined,
     fromPrice: undefined,
     toPrice: undefined,
-    manufacturer: undefined,
+    manufacturer: [],
     release: undefined,
+    builtInMemory: undefined,
+    ramSize: undefined,
+    haveNfc: undefined,
   },
 });
 
