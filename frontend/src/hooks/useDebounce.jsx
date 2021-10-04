@@ -17,5 +17,6 @@ export const useDebounce = (value, ms) => {
       }
     };
   }, [ms, value]);
+
   return debouncedValue;
 };

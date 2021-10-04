@@ -138,19 +138,19 @@ const Filters = view(() => {
           <BlockManufactures />
         </CollapsingBlock>
 
-        <CollapsingBlock title="Год релиза">
+        <CollapsingBlock title="Год релиза" initialState={false}>
           <BlockRelease />
         </CollapsingBlock>
 
-        <CollapsingBlock title="Объем встроенной памяти">
+        <CollapsingBlock title="Объем встроенной памяти" initialState={false}>
           <BlockBuiltInMemory />
         </CollapsingBlock>
 
-        <CollapsingBlock title="Объем оперативной памяти">
+        <CollapsingBlock title="Объем оперативной памяти" initialState={false}>
           <BlockRamSize />
         </CollapsingBlock>
 
-        <CollapsingBlock title="NFC">
+        <CollapsingBlock title="NFC" initialState={false}>
           <div>
             <CustomRadioButtons
               value={products.params.haveNfc || ""}

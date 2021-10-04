@@ -8,9 +8,10 @@ const useStyles = makeStyles({
     padding: ".3rem",
     borderBottom: `1px solid ${grey[300]}`,
   },
-  content: {
-    animation: "$open .3s ease both",
+  contentOpen: {
+    animation: "$open .3s ease-in-out both",
   },
+
   header: {
     display: "flex",
     justifyContent: "space-between",
@@ -40,9 +41,9 @@ const useStyles = makeStyles({
   },
 });
 
-const CollapsingBlock = ({ title, children }) => {
+const CollapsingBlock = ({ title, children, initialState = true }) => {
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(initialState);
 
   return (
     <div className={classes.root}>
@@ -53,7 +54,7 @@ const CollapsingBlock = ({ title, children }) => {
         {title} <CollapsingIcon open={open} />
       </h4>
 
-      {open && <div className={classes.content}>{children}</div>}
+      {open && <div className={classes.contentOpen}>{children}</div>}
     </div>
   );
 };
