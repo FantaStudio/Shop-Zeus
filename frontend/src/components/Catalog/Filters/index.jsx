@@ -15,7 +15,6 @@ import CollapsingBlock from "./components/CollapsingBlock";
 const useStyles = makeStyles({
   root: {
     maxWidth: 350,
-    width: "100%",
     height: "min-content",
     backgroundColor: "#fff",
     borderRadius: "1rem",

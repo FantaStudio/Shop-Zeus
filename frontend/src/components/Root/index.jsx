@@ -62,23 +62,27 @@ const useStyles = makeStyles({
       height: "100vh",
     },
     "#main-content": {
-      width: 1600,
+      width: 1400,
       margin: "0 auto",
 
       "@media (max-width: 1824px)": {
-        width: 1400,
-      },
-
-      "@media (max-width: 1624px)": {
-        width: 1300,
-      },
-
-      "@media (max-width: 1424px)": {
         width: 1200,
       },
 
-      "@media (max-width: 1224px)": {
-        width: "100%",
+      "@media (max-width: 1624px)": {
+        width: 1100,
+      },
+
+      "@media (max-width: 1424px)": {
+        width: 900,
+      },
+
+      "@media (max-width: 1024px)": {
+        width: 800,
+      },
+
+      "@media (max-width: 850px)": {
+        width: "95%",
       },
     },
     a: {
