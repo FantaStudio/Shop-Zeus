@@ -11,6 +11,7 @@ const useStyles = makeStyles({
   root: {
     display: "flex",
     alignItems: "center",
+    justifyContent: "space-between",
   },
   iconBasket: {
     display: "flex",

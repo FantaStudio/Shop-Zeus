@@ -15,7 +15,7 @@ const CustomCheckboxLabel = ({
       labelPlacement="end"
       label={label}
       disabled={disabled}
-      style={{ fontFamily: "'Montserrat', sans-serif" }}
+      style={{ fontFamily: "'Montserrat', sans-serif", userSelect: "none" }}
       control={
         <Checkbox
           checked={checked}

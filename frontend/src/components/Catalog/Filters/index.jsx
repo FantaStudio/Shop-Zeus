@@ -1,12 +1,15 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { view } from "@risingstack/react-easy-state";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import products from "../../../store/products";
 import SearchField from "../../System/SearchField";
 import { useDebounce } from "./../../../hooks/useDebounce";
-import CustomCheckboxLabel from "./../../System/CustomCheckboxLabel";
 import CustomRadioButtons from "./../../System/CustomRadioButtons";
-import CustomTextField from "./../../System/CustomTextField";
+import BlockBuiltInMemory from "./BlockBuiltInMemory";
+import BlockManufactures from "./BlockManufactures";
+import BlockPrice from "./BlockPrice";
+import BlockRamSize from "./BlockRamSize";
+import BlockRelease from "./BlockRelease";
 import CollapsingBlock from "./components/CollapsingBlock";
 
 const useStyles = makeStyles({
@@ -20,7 +23,7 @@ const useStyles = makeStyles({
   },
 });
 
-const options = [
+const optionsHaveInMarket = [
   {
     label: "В наличие",
     value: "inStock",
@@ -31,108 +34,133 @@ const options = [
   },
   {
     label: "Все товары включая отсутствующие в продаже",
-    value: "All",
+    value: "",
   },
 ];
 
-const Filters = view(() => {
-  const classes = useStyles();
-  const [fromPrice, setFromPrice] = useState(products.params.fromPrice || "");
-  const [toPrice, setToPrice] = useState(products.params.toPrice || "");
+const optionsHaveNFC = [
+  {
+    label: "Все",
+    value: "",
+  },
+  {
+    label: "Есть",
+    value: "Yes",
+  },
+  {
+    label: "Нету",
+    value: "No",
+  },
+];
+
+const WatchChangeFilters = view(() => {
+  const {
+    search,
+    haveInMarket,
+    manufacturers,
+    fromPrice,
+    toPrice,
+    releases,
+    builtInMemory,
+    ramSize,
+    haveNfc,
+    sortBy,
+    sortDirection,
+  } = products.params;
 
   const debouncedFromPrice = useDebounce(fromPrice, 500);
   const debouncedToPrice = useDebounce(toPrice, 500);
 
-  const { search, haveInMarket, manufacturer } = products.params;
+  useEffect(() => {
+    console.log(
+      search,
+      haveInMarket,
+      manufacturers,
+      debouncedFromPrice,
+      debouncedToPrice,
+      releases,
+      builtInMemory,
+      ramSize,
+      haveNfc,
+      sortBy,
+      sortDirection
+    );
+  }, [
+    debouncedFromPrice,
+    debouncedToPrice,
+    haveInMarket,
+    manufacturers,
+    search,
+    releases,
+    builtInMemory,
+    ramSize,
+    haveNfc,
+    sortBy,
+    sortDirection,
+  ]);
+
+  return null;
+});
+
+const Filters = view(() => {
+  const classes = useStyles();
 
   const onSearch = useCallback((search) => {
     products.params.search = search;
     products.params.page = 1;
   }, []);
 
-  const mapCheckboxes = products.manufactures.map((item) => {
-    return (
-      <div key={item}>
-        <CustomCheckboxLabel
-          checked={manufacturer.includes(item)}
-          label={item}
-          onChange={(e, checked) => {
-            if (checked) {
-              products.params.manufacturer = [
-                ...products.params.manufactures,
-                item,
-              ];
-            } else {
-              products.params.manufacturer.filter((m) => m !== item);
-            }
-          }}
-        />
-      </div>
-    );
-  });
-
   return (
-    <div className={classes.root}>
-      <SearchField defaultValue={search} onSearch={onSearch} />
+    <>
+      <WatchChangeFilters />
 
-      <CollapsingBlock title="Наличие в магазинах">
-        <div>
-          <CustomRadioButtons
-            value={haveInMarket || "inStock"}
-            onChange={(e, value) => (products.params.haveInMarket = value)}
-            items={options}
-          />
-        </div>
-      </CollapsingBlock>
+      <div className={classes.root}>
+        <SearchField
+          defaultValue={products.params.search}
+          onSearch={onSearch}
+        />
 
-      <CollapsingBlock title="Цена">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginRight: ".3rem",
-          }}
-        >
-          <div style={{ width: 150 }}>
-            <CustomTextField
-              value={fromPrice}
-              placeholder="От"
-              onChange={(e, value) => setFromPrice(value)}
-              fullWidth
-            />{" "}
-          </div>
-
-          <div style={{ width: 150 }}>
-            <CustomTextField
-              value={toPrice}
-              placeholder="До"
-              onChange={(e, value) => setToPrice(value)}
-              fullWidth
+        <CollapsingBlock title="Наличие в магазинах">
+          <div>
+            <CustomRadioButtons
+              value={products.params.haveInMarket || ""}
+              onChange={(e, value) => (products.params.haveInMarket = value)}
+              items={optionsHaveInMarket}
             />
           </div>
-        </div>
-      </CollapsingBlock>
+        </CollapsingBlock>
 
-      <CollapsingBlock title="Производитель">
-        <div>{mapCheckboxes}</div>
-      </CollapsingBlock>
+        <CollapsingBlock title="Цена">
+          <BlockPrice />
+        </CollapsingBlock>
 
-      <CollapsingBlock title="Год релиза">
-        <div>11</div>
-      </CollapsingBlock>
+        <CollapsingBlock title="Производитель">
+          <BlockManufactures />
+        </CollapsingBlock>
 
-      <CollapsingBlock title="Объем встроенной памяти">
-        <div>11</div>
-      </CollapsingBlock>
+        <CollapsingBlock title="Год релиза">
+          <BlockRelease />
+        </CollapsingBlock>
 
-      <CollapsingBlock title="Объем оперативной памяти">
-        <div>11</div>
-      </CollapsingBlock>
+        <CollapsingBlock title="Объем встроенной памяти">
+          <BlockBuiltInMemory />
+        </CollapsingBlock>
 
-      <CollapsingBlock title="NFC">
-        <div>11</div>
-      </CollapsingBlock>
-    </div>
+        <CollapsingBlock title="Объем оперативной памяти">
+          <BlockRamSize />
+        </CollapsingBlock>
+
+        <CollapsingBlock title="NFC">
+          <div>
+            <CustomRadioButtons
+              value={products.params.haveNfc || ""}
+              onChange={(e, value) => (products.params.haveNfc = value)}
+              items={optionsHaveNFC}
+            />
+          </div>
+        </CollapsingBlock>
+      </div>
+    </>
   );
 });
 

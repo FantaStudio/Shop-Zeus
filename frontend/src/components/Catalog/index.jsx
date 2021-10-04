@@ -19,7 +19,6 @@ const useStyles = makeStyles({
 const Catalog = () => {
   const classes = useStyles();
   const [showType, setShowType] = useState("Row");
-  const [sortType, setSortType] = useState("Cheap");
 
   useEffect(() => {
     const getKey = localStorage.getItem("showTypeMarket");
@@ -33,12 +32,7 @@ const Catalog = () => {
     <div className={classes.root}>
       <h1>Смартфоны</h1>
 
-      <TopToolbar
-        showType={showType}
-        setShowType={setShowType}
-        sortType={sortType}
-        setSortType={setSortType}
-      />
+      <TopToolbar showType={showType} setShowType={setShowType} />
 
       <div className={classes.content}>
         <Filters />

@@ -24,7 +24,10 @@ const CustomSimpleMenu = ({
       InputLabelProps={{
         shrink: true,
       }}
-      style={{ fontFamily: "'Montserrat', sans-serif", ...style }}
+      style={{
+        fontFamily: "'Montserrat', sans-serif",
+        ...style,
+      }}
       onChange={(e) => onChange(e, e.target.value)}
       label={label}
       disabled={disabled}

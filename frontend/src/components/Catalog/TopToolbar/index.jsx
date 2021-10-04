@@ -1,8 +1,9 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { Apps, Toc } from "@material-ui/icons";
 import clsx from "clsx";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { secondaryThemeColor } from "../../../helpers/colors";
+import products from "../../../store/products";
 import CustomSimpleMenu from "../../System/CustomSimpleMenu";
 
 const useStyles = makeStyles({
@@ -29,8 +30,9 @@ const useStyles = makeStyles({
   },
 });
 
-const TopToolbar = ({ showType, setShowType, sortType, setSortType }) => {
+const TopToolbar = ({ showType, setShowType }) => {
   const classes = useStyles();
+  const [sortBy, setSortBy] = useState("Cheap");
 
   const options = useMemo(() => {
     return [
@@ -43,10 +45,6 @@ const TopToolbar = ({ showType, setShowType, sortType, setSortType }) => {
         value: "Expensive",
       },
       {
-        label: "Сначала популярные",
-        value: "Popular",
-      },
-      {
         label: "По наименованию",
         value: "Name",
       },
@@ -57,9 +55,24 @@ const TopToolbar = ({ showType, setShowType, sortType, setSortType }) => {
     <div className={classes.root}>
       <div className={classes.sortBlock}>
         <CustomSimpleMenu
-          value={sortType}
+          value={sortBy || "Cheap"}
           onChange={(e, value) => {
-            setSortType(value);
+            if (value === "Cheap") {
+              products.params.sortBy = "price";
+              products.params.sortDirection = "asc";
+            }
+
+            if (value === "Expensive") {
+              products.params.sortBy = "price";
+              products.params.sortDirection = "desc";
+            }
+
+            if (value === "Name") {
+              products.params.sortBy = "name";
+              products.params.sortDirection = "asc";
+            }
+
+            setSortBy(value);
           }}
           options={options}
           label="Сортировка"
