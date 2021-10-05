@@ -4,6 +4,7 @@ import React, { Suspense } from "react";
 import { useLocation } from "react-router-dom";
 import { Routes } from "../../routing/Routes";
 import SwitchRoutes from "../../routing/SwitchRoutes";
+import { secondaryThemeColor } from "./../../helpers/colors";
 import Header from "./Header";
 
 const useStyles = makeStyles({
@@ -54,6 +55,9 @@ const useStyles = makeStyles({
     },
     ".MuiOutlinedInput-input": {
       padding: ".7rem .4rem",
+    },
+    ".MuiBadge-colorPrimary": {
+      backgroundColor: secondaryThemeColor,
     },
     "#root": {
       display: "flex",

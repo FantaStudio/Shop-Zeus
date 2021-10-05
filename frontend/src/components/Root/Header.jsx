@@ -1,3 +1,4 @@
+import { Badge } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { ExitToApp, ShoppingBasket } from "@material-ui/icons";
 import { view } from "@risingstack/react-easy-state";
@@ -24,6 +25,10 @@ const useStyles = makeStyles({
   icons: {
     display: "flex",
   },
+  anchorOriginTopRightRectangle: {
+    top: 5,
+    right: 40,
+  },
 });
 
 const Header = view(() => {
@@ -38,11 +43,28 @@ const Header = view(() => {
 
           <div className={classes.icons}>
             <div className={classes.iconBasket}>
-              <ShoppingBasket
-                fontSize="large"
-                style={{ marginRight: ".1rem" }}
-                onClick={() => history.push("/shopping-basket")}
-              />
+              {auth?.productsInBasket?.length > 0 ? (
+                <Badge
+                  color="primary"
+                  badgeContent={auth?.productsInBasket?.length}
+                  classes={{
+                    anchorOriginTopRightRectangle:
+                      classes.anchorOriginTopRightRectangle,
+                  }}
+                >
+                  <ShoppingBasket
+                    fontSize="large"
+                    style={{ marginRight: ".1rem" }}
+                    onClick={() => history.push("/shopping-basket")}
+                  />
+                </Badge>
+              ) : (
+                <ShoppingBasket
+                  fontSize="large"
+                  style={{ marginRight: ".1rem" }}
+                  onClick={() => history.push("/shopping-basket")}
+                />
+              )}
               Корзина
             </div>
 
