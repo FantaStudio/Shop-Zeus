@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { ExitToApp, ShoppingBasket } from "@material-ui/icons";
 import { view } from "@risingstack/react-easy-state";
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { secondaryThemeColor } from "../../helpers/colors";
 import Logo from "../System/Logo";
 import auth from "./../../store/auth";
@@ -27,6 +28,7 @@ const useStyles = makeStyles({
 
 const Header = view(() => {
   const classes = useStyles();
+  const history = useHistory();
 
   return (
     <header>
@@ -39,6 +41,7 @@ const Header = view(() => {
               <ShoppingBasket
                 fontSize="large"
                 style={{ marginRight: ".1rem" }}
+                onClick={() => history.push("/shopping-basket")}
               />
               Корзина
             </div>
