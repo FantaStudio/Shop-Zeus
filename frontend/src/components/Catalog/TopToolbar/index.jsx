@@ -16,10 +16,6 @@ const useStyles = makeStyles({
     alignItems: "flex-end",
     marginBottom: "1rem",
     borderRadius: "1rem",
-
-    "@media (max-width: 1224px)": {
-      padding: ".5rem 0",
-    },
   },
   sortBlock: {
     maxWidth: 200,

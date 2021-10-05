@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useState } from "react";
+import products from "../../store/products";
 import Item from "./components/Item";
 import Filters from "./Filters";
 import TopToolbar from "./TopToolbar";
@@ -28,39 +29,6 @@ const useStyles = makeStyles({
   },
 });
 
-const fakeOptions = [
-  {
-    id: 1,
-    name: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
-    price: 2000,
-    imageHref: "/images/phone.jpg",
-  },
-  {
-    id: 2,
-    name: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
-    price: 3000,
-    imageHref: "/images/phone.jpg",
-  },
-  {
-    id: 3,
-    name: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
-    price: 4000,
-    imageHref: "/images/phone.jpg",
-  },
-  {
-    id: 4,
-    name: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
-    price: 10000,
-    imageHref: "/images/phone.jpg",
-  },
-  {
-    id: 5,
-    name: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
-    price: 12000,
-    imageHref: "/images/phone.jpg",
-  },
-];
-
 const Catalog = () => {
   const classes = useStyles();
   const [showType, setShowType] = useState("Row");
@@ -73,7 +41,7 @@ const Catalog = () => {
     }
   }, []);
 
-  const mapFakeOptions = fakeOptions.map((phone) => {
+  const mapFakeOptions = products.items.map((phone) => {
     return <Item key={phone.id} showType={showType} phone={phone} />;
   });
 
