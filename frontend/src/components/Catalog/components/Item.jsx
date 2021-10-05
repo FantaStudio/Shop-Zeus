@@ -1,8 +1,10 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { ShoppingBasket } from "@material-ui/icons";
-import React, { memo } from "react";
-import { Link } from "react-router-dom";
+import { view } from "@risingstack/react-easy-state";
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
 import { secondaryThemeColor } from "./../../../helpers/colors";
+import auth from "./../../../store/auth";
 import ZeusButton from "./../../System/ZeusButton";
 
 const useStyles = makeStyles({
@@ -56,8 +58,13 @@ const useStyles = makeStyles({
   },
 });
 
-const Item = memo(({ showType, phone }) => {
+const Item = view(({ showType, phone }) => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const inInsideBasket = auth.productsInBasket.some(
+    (item) => item?.id === phone?.id
+  );
 
   return (
     <div className={showType === "Grid" ? classes.gridMode : classes.root}>
@@ -91,6 +98,13 @@ const Item = memo(({ showType, phone }) => {
             <b>{`₽ ${phone?.price}`}</b>
             {showType === "Grid" && (
               <ShoppingBasket
+                onClick={() => {
+                  if (!inInsideBasket) {
+                    auth.productsInBasket = [...auth.productsInBasket, phone];
+                  } else {
+                    history.push("/shopping-basket");
+                  }
+                }}
                 fontSize="large"
                 style={{
                   marginLeft: ".5rem",
@@ -101,7 +115,20 @@ const Item = memo(({ showType, phone }) => {
             )}
           </p>
 
-          {showType !== "Grid" && <ZeusButton>Купить</ZeusButton>}
+          {showType !== "Grid" && (
+            <ZeusButton
+              style={{ whiteSpace: "nowrap" }}
+              onClick={() => {
+                if (!inInsideBasket) {
+                  auth.productsInBasket = [...auth.productsInBasket, phone];
+                } else {
+                  history.push("/shopping-basket");
+                }
+              }}
+            >
+              {inInsideBasket ? "В корзине" : "Купить"}{" "}
+            </ZeusButton>
+          )}
         </div>
       </div>
     </div>

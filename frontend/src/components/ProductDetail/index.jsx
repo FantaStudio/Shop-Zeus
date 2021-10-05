@@ -1,8 +1,10 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { view } from "@risingstack/react-easy-state";
 import React, { useEffect, useState } from "react";
-import { useRouteMatch } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import products from "../../store/products"; /* repeat(auto-fill, minmax(500px, 1fr)) */
 import ZeusButton from "../System/ZeusButton";
+import auth from "./../../store/auth";
 import Block from "./components/Block";
 import Field from "./components/Field";
 
@@ -20,6 +22,10 @@ const useStyles = makeStyles({
     gridGap: "12px",
     padding: "10px 15px",
     borderRadius: "1rem",
+
+    "@media (max-width: 800px)": {
+      gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+    },
   },
   contentMainImage: {
     width: "100%",
@@ -42,6 +48,15 @@ const useStyles = makeStyles({
     maxHeight: 50,
     height: "100%",
     marginTop: "4rem",
+
+    "@media (max-width: 800px)": {
+      marginTop: 0,
+    },
+  },
+  blockData: {
+    "@media (max-width: 800px)": {
+      minHeight: 180,
+    },
   },
   price: {
     marginLeft: "1rem",
@@ -63,8 +78,9 @@ const useStyles = makeStyles({
   },
 });
 
-const ProductDetail = () => {
+const ProductDetail = view(() => {
   const match = useRouteMatch();
+  const history = useHistory();
   const classes = useStyles();
   const [product, setProduct] = useState(null);
 
@@ -74,6 +90,10 @@ const ProductDetail = () => {
 
     setProduct(findItem);
   }, [match?.params?.id]);
+
+  const inInsideBasket = auth.productsInBasket.some(
+    (item) => item?.id === product?.id
+  );
 
   return (
     <div className={classes.root}>
@@ -86,7 +106,7 @@ const ProductDetail = () => {
           <img className={classes.contentMainImage} src={product?.imageHref} />
         </div>
 
-        <div>
+        <div className={classes.blockData}>
           <div className={classes.contentMainData}>
             <p className={classes.blockName}>
               <b>{product?.name}</b>
@@ -98,7 +118,18 @@ const ProductDetail = () => {
               <b>{`₽ ${product?.price}`}</b>
             </div>
 
-            <ZeusButton style={{ marginRight: "1rem" }}>Купить</ZeusButton>
+            <ZeusButton
+              onClick={() => {
+                if (!inInsideBasket) {
+                  auth.productsInBasket = [...auth.productsInBasket, product];
+                } else {
+                  history.push("/shopping-basket");
+                }
+              }}
+              style={{ marginRight: "1rem" }}
+            >
+              Купить
+            </ZeusButton>
           </div>
         </div>
       </div>
@@ -282,6 +313,6 @@ const ProductDetail = () => {
       </div>
     </div>
   );
-};
+});
 
 export default ProductDetail;
