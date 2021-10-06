@@ -17,6 +17,8 @@ const ShoppingBasket = view(() => {
 
   return (
     <div className={classes.root}>
+      <h1>Корзина</h1>
+
       {auth?.productsInBasket?.length > 0 ? (
         <WithProducts />
       ) : (

@@ -17,7 +17,9 @@ const Logo = () => {
 
   return (
     <div className={classes.root}>
-      <img src="/images/logotip.png" alt="logo" className={classes.image} />
+      <a href="/">
+        <img src="/images/logotip.png" alt="logo" className={classes.image} />
+      </a>
     </div>
   );
 };
