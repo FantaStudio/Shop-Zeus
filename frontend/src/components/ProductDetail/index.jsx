@@ -211,7 +211,9 @@ const ProductDetail = view(() => {
             <Field
               left="Фронтальная камера"
               right={`${
-                product?.backCameraMp ? "product?.backCameraMp Мп." : "нету"
+                product?.frontCameraMp
+                  ? product?.frontCameraMp + " Мп."
+                  : "нету"
               }`}
             />
           </Block>
