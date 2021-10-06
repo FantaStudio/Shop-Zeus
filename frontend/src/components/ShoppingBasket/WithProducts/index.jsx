@@ -54,10 +54,10 @@ const WithProducts = view(() => {
 
   const total = auth.productsInBasket.reduce((prev, next) => {
     if (is(Object, prev)) {
-      return prev?.price + next?.price;
+      return +prev?.price + +next?.price;
     }
 
-    return prev + next?.price;
+    return +prev + +next?.price;
   });
 
   return (

@@ -5,6 +5,7 @@ import { render } from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import Browser from "./components/Browser";
 import Root from "./components/Root";
+import ErrorHandler from "./ErrorHandler";
 
 let isAsync = true;
 
@@ -21,7 +22,9 @@ render(
     <Router>
       <StylesProvider>
         <Suspense fallback={<LinearProgress />}>
-          <Root />
+          <ErrorHandler>
+            <Root />
+          </ErrorHandler>
         </Suspense>
       </StylesProvider>
     </Router>
