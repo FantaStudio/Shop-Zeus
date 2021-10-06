@@ -25,10 +25,6 @@ const useStyles = makeStyles({
   icons: {
     display: "flex",
   },
-  anchorOriginTopRightRectangle: {
-    top: 5,
-    right: 40,
-  },
 });
 
 const Header = view(() => {
@@ -47,10 +43,6 @@ const Header = view(() => {
                 <Badge
                   color="primary"
                   badgeContent={auth?.productsInBasket?.length}
-                  classes={{
-                    anchorOriginTopRightRectangle:
-                      classes.anchorOriginTopRightRectangle,
-                  }}
                 >
                   <ShoppingBasket
                     fontSize="large"

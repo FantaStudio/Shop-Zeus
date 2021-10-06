@@ -1,9 +1,11 @@
 import { LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { Suspense } from "react";
+import { view } from "@risingstack/react-easy-state";
+import React, { Suspense, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Routes } from "../../routing/Routes";
 import SwitchRoutes from "../../routing/SwitchRoutes";
+import auth from "../../store/auth";
 import { secondaryThemeColor } from "./../../helpers/colors";
 import Header from "./Header";
 
@@ -99,6 +101,26 @@ const useStyles = makeStyles({
   },
 });
 
+const SyncShoppingBasket = view(() => {
+  const { productsInBasket } = auth;
+
+  useEffect(() => {
+    const getKey = localStorage.getItem("basketProductsZeus");
+
+    if (getKey) {
+      auth.productsInBasket = JSON.parse(getKey);
+    }
+  }, []);
+
+  useEffect(() => {
+    const json = JSON.stringify(productsInBasket);
+
+    localStorage.setItem("basketProductsZeus", json);
+  }, [productsInBasket]);
+
+  return null;
+});
+
 const Root = () => {
   useStyles();
   const location = useLocation();
@@ -110,6 +132,8 @@ const Root = () => {
   return (
     <>
       <Header />
+
+      <SyncShoppingBasket />
 
       <main id="main-content">
         <Suspense fallback={<LinearProgress />}>
