@@ -38,7 +38,10 @@ const Header = view(() => {
           <Logo />
 
           <div className={classes.icons}>
-            <div className={classes.iconBasket}>
+            <div
+              className={classes.iconBasket}
+              onClick={() => history.push("/shopping-basket")}
+            >
               {auth?.productsInBasket?.length > 0 ? (
                 <Badge
                   color="primary"
@@ -47,14 +50,12 @@ const Header = view(() => {
                   <ShoppingBasket
                     fontSize="large"
                     style={{ marginRight: ".1rem" }}
-                    onClick={() => history.push("/shopping-basket")}
                   />
                 </Badge>
               ) : (
                 <ShoppingBasket
                   fontSize="large"
                   style={{ marginRight: ".1rem" }}
-                  onClick={() => history.push("/shopping-basket")}
                 />
               )}
               Корзина
