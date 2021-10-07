@@ -8,7 +8,13 @@ const ProductDetail = lazy(() => import("../components/ProductDetail"));
 
 const ShoppingBasket = lazy(() => import("../components/ShoppingBasket"));
 
+const Checkout = lazy(() => import("../components/Roles/Client/Checkout"));
+
 export const Routes = [
+  {
+    path: "/client/checkout",
+    component: Checkout,
+  },
   {
     path: "/phone/:id",
     component: ProductDetail,

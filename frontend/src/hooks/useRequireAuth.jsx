@@ -1,9 +1,10 @@
 import { autoEffect } from "@risingstack/react-easy-state";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import auth from "../store/auth";
 
 export const useRequireAuth = (roles, redirectUrl = "/login") => {
   const history = useHistory();
+  const location = useLocation();
 
   autoEffect(() => {
     const shouldBeRoles = auth?.profile?.roles?.some((role) =>
@@ -11,7 +12,7 @@ export const useRequireAuth = (roles, redirectUrl = "/login") => {
     );
 
     if (!shouldBeRoles) {
-      history.replace(redirectUrl, { from: window.location.pathname });
+      history.replace(redirectUrl, { from: location.pathname });
     }
   });
 };

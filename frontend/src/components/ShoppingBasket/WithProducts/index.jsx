@@ -2,6 +2,7 @@ import { Divider } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { view } from "@risingstack/react-easy-state";
 import React from "react";
+import { Link } from "react-router-dom";
 import { is } from "./../../../helpers/is";
 import auth from "./../../../store/auth";
 import ZeusButton from "./../../System/ZeusButton";
@@ -84,7 +85,9 @@ const WithProducts = view(() => {
           <Divider />
 
           <div className={classes.btnBlock}>
-            <ZeusButton>Оформить заказ</ZeusButton>
+            <ZeusButton component={Link} to="/client/checkout">
+              Оформить заказ
+            </ZeusButton>
           </div>
         </div>
       </div>

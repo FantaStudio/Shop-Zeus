@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { ExitToApp, ShoppingBasket } from "@material-ui/icons";
 import { view } from "@risingstack/react-easy-state";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { secondaryThemeColor } from "../../helpers/colors";
 import Logo from "../System/Logo";
 import auth from "./../../store/auth";
@@ -69,7 +69,9 @@ const Header = view(() => {
 
             {!auth?.profile && (
               <div>
-                <ZeusButton>Войти</ZeusButton>
+                <ZeusButton component={Link} to="/login">
+                  Войти
+                </ZeusButton>
               </div>
             )}
           </div>
