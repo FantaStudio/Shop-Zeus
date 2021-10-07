@@ -44,49 +44,66 @@ const Header = view(() => {
             <Logo />
 
             {!xs && auth?.profile && (
-              <p
-                style={{
-                  color: secondaryThemeColor,
-                  margin: 0,
-                  fontWeight: 700,
-                  marginLeft: "1rem",
-                }}
-              >
-                <Link
-                  to="/client/profile"
-                  style={{ color: secondaryThemeColor }}
-                >
-                  {auth?.profile?.name}
-                </Link>
-              </p>
+              <>
+                {auth?.profile?.roles?.includes("Admin") ? (
+                  <p
+                    style={{
+                      color: secondaryThemeColor,
+                      margin: 0,
+                      fontWeight: 700,
+                      marginLeft: "1rem",
+                    }}
+                  >
+                    {auth?.profile?.name}
+                  </p>
+                ) : (
+                  <p
+                    style={{
+                      color: secondaryThemeColor,
+                      margin: 0,
+                      fontWeight: 700,
+                      marginLeft: "1rem",
+                    }}
+                  >
+                    <Link
+                      to="/client/profile"
+                      style={{ color: secondaryThemeColor }}
+                    >
+                      {auth?.profile?.name}
+                    </Link>
+                  </p>
+                )}
+              </>
             )}
           </div>
 
           <div className={classes.icons}>
-            <div
-              className={classes.icon}
-              onClick={() => history.push("/shopping-basket")}
-            >
-              {auth?.productsInBasket?.length > 0 ? (
-                <Badge
-                  color="primary"
-                  badgeContent={auth?.productsInBasket?.length}
-                >
+            {!auth?.profile?.roles?.includes("Admin") && (
+              <div
+                className={classes.icon}
+                onClick={() => history.push("/shopping-basket")}
+              >
+                {auth?.productsInBasket?.length > 0 ? (
+                  <Badge
+                    color="primary"
+                    badgeContent={auth?.productsInBasket?.length}
+                  >
+                    <ShoppingBasket
+                      fontSize="large"
+                      style={{ marginRight: ".1rem" }}
+                    />
+                  </Badge>
+                ) : (
                   <ShoppingBasket
                     fontSize="large"
                     style={{ marginRight: ".1rem" }}
                   />
-                </Badge>
-              ) : (
-                <ShoppingBasket
-                  fontSize="large"
-                  style={{ marginRight: ".1rem" }}
-                />
-              )}
-              Корзина
-            </div>
+                )}
+                Корзина
+              </div>
+            )}
 
-            {auth?.profile && (
+            {auth?.profile && auth?.profile?.roles?.includes("Client") && (
               <div
                 className={classes.icon}
                 onClick={() => history.push("/client/profile")}
@@ -98,7 +115,15 @@ const Header = view(() => {
 
             {auth?.profile && (
               <div className={classes.icon}>
-                <ExitToApp fontSize="large" style={{ marginRight: ".1rem" }} />
+                <ExitToApp
+                  fontSize="large"
+                  style={{ marginRight: ".1rem" }}
+                  onClick={() => {
+                    window.location.replace("/");
+
+                    setTimeout(() => (auth.profile = undefined), 200);
+                  }}
+                />
               </div>
             )}
 

@@ -10,6 +10,7 @@ const useStyles = makeStyles({
   root: {
     backgroundColor: "#fff",
     padding: "10px 15px",
+    fontFamily: "'Montserrat', sans-serif",
     borderRadius: "1rem",
   },
   indicator: {
