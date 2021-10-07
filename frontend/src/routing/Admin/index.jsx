@@ -12,11 +12,45 @@ const AllProducts = lazy(() =>
   import("../../components/Roles/Admin/AllProducts")
 );
 
+const ProductDetailMain = lazy(() =>
+  import("../../components/Roles/Admin/AllProducts/Product")
+);
+
+const ProductDetailInfo = lazy(() =>
+  import("../../components/Roles/Admin/AllProducts/Product/ProductInformation")
+);
+
+const ProductDetailEdit = lazy(() =>
+  import("../../components/Roles/Admin/AllProducts/Product/ProductEditable")
+);
+
+const CreateProduct = lazy(() =>
+  import("../../components/Roles/Admin/AllProducts/CreateProduct")
+);
+
 export const Admin = [
   {
     path: "/admin",
     component: Main,
     routes: [
+      {
+        path: "/admin/all-products/:id",
+        component: ProductDetailMain,
+        routes: [
+          {
+            path: "/admin/all-products/:id/edit",
+            component: ProductDetailEdit,
+          },
+          {
+            path: "/admin/all-products/:id",
+            component: ProductDetailInfo,
+          },
+        ],
+      },
+      {
+        path: "/admin/all-products/create",
+        component: CreateProduct,
+      },
       {
         path: "/admin/all-clients",
         component: AllClients,
