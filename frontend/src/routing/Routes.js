@@ -1,3 +1,5 @@
+import { Profile } from "./Profile";
+
 const { lazy } = require("react");
 
 const Catalog = lazy(() => import("../components/Catalog"));
@@ -13,6 +15,7 @@ const Checkout = lazy(() => import("../components/Roles/Client/Checkout"));
 const Registration = lazy(() => import("../components/Auth/Registration"));
 
 export const Routes = [
+  ...Profile,
   {
     path: "/client/checkout",
     component: Checkout,
