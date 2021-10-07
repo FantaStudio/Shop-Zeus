@@ -4,8 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { secondaryThemeColor } from "../../../helpers/colors";
+import auth from "./../../../store/auth";
 import MyTextField from "./../../System/FormComponents/MyTextField";
 import ZeusButton from "./../../System/ZeusButton";
 
@@ -45,6 +46,7 @@ const useStyles = makeStyles({
 });
 
 const Login = () => {
+  const history = useHistory();
   const location = useLocation();
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
@@ -58,9 +60,22 @@ const Login = () => {
     shouldUnregister: false,
   });
 
-  const confirm = useCallback((values) => {
-    console.log(values);
-  }, []);
+  const confirm = useCallback(
+    (values) => {
+      if (values?.email === "admin@zeus.com" && values?.password === "admin") {
+        auth.profile = {
+          name: "Админ",
+          email: "admin@zues.com",
+          phone: "+79173212312",
+          roles: ["Admin"],
+        };
+
+        history.push(location?.state?.from || "/admin/all-clients");
+      }
+      console.log(values);
+    },
+    [history, location?.state?.from]
+  );
 
   return (
     <div className={classes.root}>
