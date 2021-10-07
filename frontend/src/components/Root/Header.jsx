@@ -82,7 +82,10 @@ const Header = view(() => {
             </div>
 
             {auth?.profile && (
-              <div className={classes.icon}>
+              <div
+                className={classes.icon}
+                onClick={() => history.push("/client/profile")}
+              >
                 <Person fontSize="large" style={{ marginRight: ".1rem" }} />
                 Профиль
               </div>

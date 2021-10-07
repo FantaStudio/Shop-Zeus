@@ -1,6 +1,5 @@
-import { Profile } from "./Profile";
-
 const { lazy } = require("react");
+import { Profile } from "./Profile/index";
 
 const Catalog = lazy(() => import("../components/Catalog"));
 

@@ -2,11 +2,10 @@ import { LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { view } from "@risingstack/react-easy-state";
 import React, { Suspense, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { Routes } from "../../routing/Routes";
 import SwitchRoutes from "../../routing/SwitchRoutes";
 import auth from "../../store/auth";
-import { secondaryThemeColor } from "./../../helpers/colors";
+import { mainThemeColor, secondaryThemeColor } from "./../../helpers/colors";
 import Header from "./Header";
 
 const useStyles = makeStyles({
@@ -16,7 +15,7 @@ const useStyles = makeStyles({
       minWidth: 400,
       overflowY: "auto",
       fontFamily: "'Montserrat', sans-serif",
-      backgroundColor: "#f1f1f5",
+      backgroundColor: mainThemeColor,
     },
     header: {
       backgroundColor: "#fff",
@@ -123,11 +122,6 @@ const SyncShoppingBasket = view(() => {
 
 const Root = () => {
   useStyles();
-  const location = useLocation();
-
-  /* Zeus  */
-
-  /* Для элементов формы (кнопки, например) использоваться лазурный цвет ,hex: #007fff */
 
   return (
     <>

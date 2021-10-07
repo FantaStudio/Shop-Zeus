@@ -12,15 +12,15 @@ const ProfileOrders = lazy(() =>
 
 export const Profile = [
   {
-    path: "/profile",
+    path: "/client/profile",
     component: ProfileMain,
     routes: [
       {
-        path: "/profile/orders",
+        path: "/client/profile/orders",
         component: ProfileOrders,
       },
       {
-        path: "/profile",
+        path: "/client/profile",
         component: ProfileInformation,
       },
     ],

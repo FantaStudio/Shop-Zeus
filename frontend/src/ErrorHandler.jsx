@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import ZeusButton from "./components/System/ZeusButton";
+import { mainThemeColor } from "./helpers/colors";
 
 const useStyles = makeStyles({
   root: {
@@ -9,7 +10,7 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f1f1f5",
+    backgroundColor: mainThemeColor,
     fontFamily: "'Montserrat', sans-serif",
     minWidth: 400,
   },
