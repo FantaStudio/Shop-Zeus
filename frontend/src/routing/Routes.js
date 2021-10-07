@@ -10,6 +10,8 @@ const ShoppingBasket = lazy(() => import("../components/ShoppingBasket"));
 
 const Checkout = lazy(() => import("../components/Roles/Client/Checkout"));
 
+const Registration = lazy(() => import("../components/Auth/Registration"));
+
 export const Routes = [
   {
     path: "/client/checkout",
@@ -22,6 +24,10 @@ export const Routes = [
   {
     path: "/shopping-basket",
     component: ShoppingBasket,
+  },
+  {
+    path: "/registration",
+    component: Registration,
   },
   {
     path: "/login",

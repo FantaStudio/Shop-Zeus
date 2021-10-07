@@ -40,6 +40,7 @@ const useStyles = makeStyles({
   },
   error: {
     color: red[600],
+    fontFamily: "'Montserrat', sans-serif",
   },
 });
 
@@ -136,7 +137,9 @@ const Login = () => {
 
         <div className={classes.actions}>
           <ZeusButton onClick={form.handleSubmit(confirm)}>Войти</ZeusButton>
-          <Link className={classes.link}>Нет аккаунта? Зарегистрироваться</Link>
+          <Link to="/registration" className={classes.link}>
+            Нет аккаунта? Зарегистрироваться
+          </Link>
         </div>
       </div>
     </div>
