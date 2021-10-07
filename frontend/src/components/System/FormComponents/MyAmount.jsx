@@ -1,7 +1,14 @@
 import { InputAdornment, TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useRef } from "react";
 import { useController } from "react-hook-form";
 import Input from "./Input";
+
+const useStyles = makeStyles({
+  root: {
+    fontFamily: "'Montserrat', sans-serif",
+  },
+});
 
 const MyAmount = ({
   autoFocus,
@@ -17,6 +24,8 @@ const MyAmount = ({
   hideBorder,
   style,
 }) => {
+  const classes = useStyles();
+
   const ref = useRef(false);
 
   const { field } = useController({
@@ -76,6 +85,9 @@ const MyAmount = ({
       }}
       InputLabelProps={{
         shrink: true,
+        classes: {
+          root: classes.root,
+        },
       }}
       fullWidth
       disabled={disabled}

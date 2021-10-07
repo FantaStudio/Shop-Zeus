@@ -2,6 +2,7 @@ import { InputAdornment, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useRef } from "react";
 import { useController } from "react-hook-form";
+import { secondaryThemeColor } from "../../../helpers/colors";
 
 const useStyles = makeStyles({
   helperText: {
@@ -9,6 +10,9 @@ const useStyles = makeStyles({
   },
   labelDisabled: {
     color: "#444444d9 !important",
+  },
+  root: {
+    fontFamily: "'Montserrat', sans-serif",
   },
   disabled: {
     color: "#282828",
@@ -62,6 +66,7 @@ const MyTextField = ({
     <TextField
       {...field}
       inputRef={ref}
+      color={secondaryThemeColor}
       style={{
         fontFamily: "'Montserrat', sans-serif",
       }}
@@ -70,7 +75,7 @@ const MyTextField = ({
       placeholder={placeholder}
       InputProps={{
         inputProps: {
-          autoComplete: autoComplete || "new-password",
+          autoComplete: autoComplete || "off",
         },
         endAdornment: endAdornment ? (
           <InputAdornment style={{ height: "100%" }} position="end">
@@ -84,10 +89,12 @@ const MyTextField = ({
       helperText={helperText}
       FormHelperTextProps={{
         className: classes.helperText,
+        root: classes.root,
       }}
       InputLabelProps={{
         shrink: true,
         classes: {
+          root: classes.root,
           disabled: classes.labelDisabled,
         },
       }}
