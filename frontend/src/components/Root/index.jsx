@@ -63,6 +63,12 @@ const useStyles = makeStyles({
     ".MuiBadge-colorPrimary": {
       backgroundColor: secondaryThemeColor,
     },
+    ".MuiRadio-colorSecondary.Mui-checked": {
+      color: secondaryThemeColor,
+    },
+    ".MuiCheckbox-colorSecondary.Mui-checked": {
+      color: secondaryThemeColor,
+    },
     "#root": {
       display: "flex",
       flexDirection: "column",
