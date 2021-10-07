@@ -2,7 +2,7 @@ import { FormHelperText, IconButton } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { secondaryThemeColor } from "../../../helpers/colors";
@@ -69,6 +69,8 @@ const Registration = () => {
     shouldUnregister: false,
   });
 
+  const { setError } = form;
+
   const confirm = useCallback((values) => {
     const payload = { ...values };
 
@@ -83,6 +85,19 @@ const Registration = () => {
     control: form?.control,
     name: "password",
   });
+
+  const confirmationPassword = useWatch({
+    control: form?.control,
+    name: "confirmationPassword",
+  });
+
+  useEffect(() => {
+    if (confirmationPassword && confirmationPassword !== password) {
+      setError("confirmationPassword", { type: "valid" });
+    } else {
+      setError("confirmationPassword", {});
+    }
+  }, [confirmationPassword, password, setError]);
 
   return (
     <div className={classes.root}>
