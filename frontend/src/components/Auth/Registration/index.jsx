@@ -109,13 +109,19 @@ const Registration = () => {
             control={form.control}
             name="name"
             label="Имя"
-            rules={{ required: true }}
+            rules={{ required: true, maxLength: 40 }}
             fullWidth
           />
 
           {form.formState.errors?.name?.type === "required" && (
             <FormHelperText className={classes.error}>
               Поле обязательное
+            </FormHelperText>
+          )}
+
+          {form.formState.errors?.name?.type === "maxLength" && (
+            <FormHelperText className={classes.error}>
+              Поле должно быть не больше 40 символов
             </FormHelperText>
           )}
 

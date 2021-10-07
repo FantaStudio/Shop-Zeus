@@ -1,11 +1,12 @@
 import { Badge } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { ExitToApp, ShoppingBasket } from "@material-ui/icons";
+import { ExitToApp, Person, ShoppingBasket } from "@material-ui/icons";
 import { view } from "@risingstack/react-easy-state";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { secondaryThemeColor } from "../../helpers/colors";
 import Logo from "../System/Logo";
+import { useCurrentWidth } from "./../../hooks/useCurrentWidth";
 import auth from "./../../store/auth";
 import ZeusButton from "./../System/ZeusButton";
 
@@ -15,7 +16,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  iconBasket: {
+  icon: {
     display: "flex",
     alignItems: "center",
     margin: "0 .8rem",
@@ -31,15 +32,34 @@ const Header = view(() => {
   const classes = useStyles();
   const history = useHistory();
 
+  const { currentWidth } = useCurrentWidth();
+
+  const xs = currentWidth <= 500;
+
   return (
     <header>
       <div id="main-content">
         <div className={classes.root}>
-          <Logo />
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Logo />
+
+            {!xs && auth?.profile && (
+              <p
+                style={{
+                  color: secondaryThemeColor,
+                  margin: 0,
+                  fontWeight: 700,
+                  marginLeft: "1rem",
+                }}
+              >
+                {auth?.profile?.name}
+              </p>
+            )}
+          </div>
 
           <div className={classes.icons}>
             <div
-              className={classes.iconBasket}
+              className={classes.icon}
               onClick={() => history.push("/shopping-basket")}
             >
               {auth?.productsInBasket?.length > 0 ? (
@@ -62,7 +82,14 @@ const Header = view(() => {
             </div>
 
             {auth?.profile && (
-              <div className={classes.iconBasket}>
+              <div className={classes.icon}>
+                <Person fontSize="large" style={{ marginRight: ".1rem" }} />
+                Профиль
+              </div>
+            )}
+
+            {auth?.profile && (
+              <div className={classes.icon}>
                 <ExitToApp fontSize="large" style={{ marginRight: ".1rem" }} />
               </div>
             )}

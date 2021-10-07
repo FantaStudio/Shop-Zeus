@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   "@global": {
     body: {
       margin: 0,
-      minWidth: 320,
+      minWidth: 400,
       overflowY: "auto",
       fontFamily: "'Montserrat', sans-serif",
       backgroundColor: "#f1f1f5",

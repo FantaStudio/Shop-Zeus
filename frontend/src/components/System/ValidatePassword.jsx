@@ -1,7 +1,8 @@
 import { green, red } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import { Check, WarningRounded } from "@material-ui/icons";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useCurrentWidth } from "../../hooks/useCurrentWidth";
 
 const regularForUppercase = new RegExp("(?=.*?[A-Z])");
 
@@ -63,21 +64,8 @@ const ValidatePassword = ({ value, isDialog }) => {
   const classes = useStyles();
 
   const [show, setShow] = useState(true);
-  const [currentWidth, setCurrentWidth] = useState(
-    document.documentElement.clientWidth
-  );
 
-  const eventResize = useCallback(() => {
-    setCurrentWidth(document.documentElement.clientWidth);
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("resize", eventResize);
-
-    return () => {
-      window.removeEventListener("resize", eventResize);
-    };
-  }, [eventResize]);
+  const { currentWidth } = useCurrentWidth();
 
   const isSmall = isDialog || currentWidth <= 1000;
 
