@@ -17,7 +17,7 @@ const useStyles = makeStyles({
       margin: 0,
       minWidth: 400,
       overflowY: "auto",
-      fontFamily: "'Montserrat', sans-serif",
+      fontFamily: "'Montserrat', sans-serif !important",
       backgroundColor: mainThemeColor,
     },
     header: {
