@@ -52,7 +52,12 @@ const Header = view(() => {
                   marginLeft: "1rem",
                 }}
               >
-                {auth?.profile?.name}
+                <Link
+                  to="/client/profile"
+                  style={{ color: secondaryThemeColor }}
+                >
+                  {auth?.profile?.name}
+                </Link>
               </p>
             )}
           </div>
