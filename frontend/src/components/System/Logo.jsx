@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -17,9 +18,9 @@ const Logo = () => {
 
   return (
     <div className={classes.root}>
-      <a href="/">
+      <Link to="/">
         <img src="/images/logotip.png" alt="logo" className={classes.image} />
-      </a>
+      </Link>
     </div>
   );
 };
