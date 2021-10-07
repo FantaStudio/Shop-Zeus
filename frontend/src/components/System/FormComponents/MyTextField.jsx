@@ -2,7 +2,6 @@ import { InputAdornment, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useEffect, useRef } from "react";
 import { useController } from "react-hook-form";
-import { secondaryThemeColor } from "../../../helpers/colors";
 
 const useStyles = makeStyles({
   helperText: {
@@ -66,7 +65,6 @@ const MyTextField = ({
     <TextField
       {...field}
       inputRef={ref}
-      color={secondaryThemeColor}
       style={{
         fontFamily: "'Montserrat', sans-serif",
       }}

@@ -1,11 +1,14 @@
-import { LinearProgress } from "@material-ui/core";
+import { DialogActions, LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { view } from "@risingstack/react-easy-state";
 import React, { Suspense, useEffect } from "react";
 import { Routes } from "../../routing/Routes";
 import SwitchRoutes from "../../routing/SwitchRoutes";
 import auth from "../../store/auth";
+import ZeusButton from "../System/ZeusButton";
 import { mainThemeColor, secondaryThemeColor } from "./../../helpers/colors";
+import ui from "./../../store/ui";
+import Alert from "./../System/Alert";
 import Header from "./Header";
 
 const useStyles = makeStyles({
@@ -24,7 +27,7 @@ const useStyles = makeStyles({
       width: "100%",
       top: 0,
       marginBottom: "1rem",
-      zIndex: 999999,
+      zIndex: 100,
     },
 
     html: {
@@ -120,6 +123,35 @@ const SyncShoppingBasket = view(() => {
   return null;
 });
 
+const GlobalSuccessOrder = view(() => {
+  const customClose = () => {
+    auth.productsInBasket = [];
+    ui.openSuccessOrderDialog = false;
+  };
+
+  return (
+    <Alert
+      open={ui.openSuccessOrderDialog}
+      customClose={customClose}
+      content={
+        <>
+          <p>
+            Ваш заказ принят и обрабатывается. За статусом заказа мы можете
+            наблюдать во вкладке профиля &apos;Мои заказы&apos;
+          </p>
+
+          <DialogActions>
+            <ZeusButton onClick={customClose}>Окей</ZeusButton>
+          </DialogActions>
+        </>
+      }
+      customTitle="Заказ успешно оформлен"
+      size="xs"
+      hideCloseBtn
+    />
+  );
+});
+
 const Root = () => {
   useStyles();
 
@@ -128,6 +160,8 @@ const Root = () => {
       <Header />
 
       <SyncShoppingBasket />
+
+      <GlobalSuccessOrder />
 
       <main id="main-content">
         <Suspense fallback={<LinearProgress />}>

@@ -2,6 +2,7 @@ import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { secondaryThemeColor } from "../../helpers/colors";
+import LoadingCircular from "./LoadingCircular";
 
 const useStyles = makeStyles({
   root: {
@@ -19,7 +20,14 @@ const useStyles = makeStyles({
   },
 });
 
-const ZeusButton = ({ children, style = {}, onClick, fullWidth, ...rest }) => {
+const ZeusButton = ({
+  children,
+  style = {},
+  onClick,
+  loading,
+  fullWidth,
+  ...rest
+}) => {
   const classes = useStyles();
 
   return (
@@ -30,8 +38,10 @@ const ZeusButton = ({ children, style = {}, onClick, fullWidth, ...rest }) => {
       onClick={onClick}
       style={style}
       fullWidth={fullWidth}
+      disabled={loading}
     >
       {children}
+      <LoadingCircular loading={loading} />
     </Button>
   );
 };
