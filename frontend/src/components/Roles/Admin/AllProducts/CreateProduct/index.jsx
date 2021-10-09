@@ -1,12 +1,17 @@
 import { FormHelperText } from "@material-ui/core";
+import { green } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useUploadFile } from "../../../../../hooks/useUploadFile";
 import products from "../../../../../store/products";
+import UploadArea from "../../../../System/UploadArea";
+import { secondaryThemeColor } from "./../../../../../helpers/colors";
 import MyAmount from "./../../../../System/FormComponents/MyAmount";
 import MyCheckboxLabel from "./../../../../System/FormComponents/MyCheckboxLabel";
 import MySimpleMenu from "./../../../../System/FormComponents/MySimpleMenu";
 import MyTextField from "./../../../../System/FormComponents/MyTextField";
+import ZeusButton from "./../../../../System/ZeusButton";
 
 const useStyles = makeStyles({
   root: {
@@ -80,6 +85,9 @@ const validByNumbers = new RegExp(/^[0-9]+([.][0-9]+)?$/);
 
 const CreateProduct = () => {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
+
+  const { file, upload } = useUploadFile();
 
   const optionsManufacturer = products.manufacturesVariables.map((item) => {
     return { label: item, value: item };
@@ -98,7 +106,7 @@ const CreateProduct = () => {
       support3G: true,
       supportLte: false,
       support5G: false,
-      formatSim: "none",
+      formatSim: "nano",
       countSimCards: "",
       displayInInch: "", // дюймовка, в начале показывать "
       screenResolution: "", // показывать пример как вводить данные 800x600
@@ -132,11 +140,25 @@ const CreateProduct = () => {
     shouldUnregister: false,
   });
 
+  const confirm = useCallback((values) => {
+    setLoading(true);
+
+    console.log(values);
+
+    setLoading(false);
+  }, []);
+
   return (
     <div className={classes.root}>
       <h1>Создание продукта (телефона)</h1>
 
       <div className={classes.block}>
+        <h2 style={{ color: secondaryThemeColor }}>Загрузите изображение</h2>
+
+        <UploadArea file={file} upload={upload} />
+
+        <div style={{ height: 15 }} />
+
         <MyTextField
           control={form?.control}
           name="model"
@@ -946,6 +968,17 @@ const CreateProduct = () => {
         )}
 
         <div style={{ height: 10 }} />
+
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <ZeusButton
+            style={{ backgroundColor: green[600] }}
+            onClick={form.handleSubmit(confirm)}
+            loading={loading}
+            disabled={!file || loading}
+          >
+            Создать
+          </ZeusButton>
+        </div>
       </div>
     </div>
   );
