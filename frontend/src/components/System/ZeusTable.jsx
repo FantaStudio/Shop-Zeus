@@ -28,6 +28,8 @@ const useStyles = makeStyles({
     flex: "1 1 auto",
     width: "100%",
     fontFamily: "'Montserrat', sans-serif",
+    backgroundColor: "#fff",
+    borderRadius: "1rem",
 
     ...scrollStyles({ color: secondaryThemeColor }),
 
@@ -37,10 +39,12 @@ const useStyles = makeStyles({
         top: 0,
         backgroundColor: "transparent",
         zIndex: 1000,
+        fontFamily: "'Montserrat', sans-serif",
       },
       "th, td": {
         cursor: "default",
         fontSize: ".85rem",
+        fontFamily: "'Montserrat', sans-serif",
       },
     },
   },

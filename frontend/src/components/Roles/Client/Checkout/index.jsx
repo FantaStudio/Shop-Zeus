@@ -1,5 +1,4 @@
 import { FormHelperText } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import { view } from "@risingstack/react-easy-state";
 import React, { useCallback, useState } from "react";
@@ -37,10 +36,6 @@ const useStyles = makeStyles({
   blockInputs: {
     width: "100%",
     marginBottom: "1rem",
-  },
-  error: {
-    color: red[600],
-    fontFamily: "'Montserrat', sans-serif",
   },
 });
 
@@ -92,9 +87,7 @@ const Checkout = view(() => {
           />
 
           {form.formState.errors?.address?.type === "required" && (
-            <FormHelperText className={classes.error}>
-              Поле обязательное
-            </FormHelperText>
+            <FormHelperText error>Поле обязательное</FormHelperText>
           )}
 
           <div style={{ height: 15 }} />
@@ -108,9 +101,7 @@ const Checkout = view(() => {
           />
 
           {form.formState.errors?.city?.type === "required" && (
-            <FormHelperText className={classes.error}>
-              Поле обязательное
-            </FormHelperText>
+            <FormHelperText error>Поле обязательное</FormHelperText>
           )}
 
           <div style={{ height: 15 }} />
@@ -124,9 +115,7 @@ const Checkout = view(() => {
           />
 
           {form.formState.errors?.postalCode?.type === "required" && (
-            <FormHelperText className={classes.error}>
-              Поле обязательное
-            </FormHelperText>
+            <FormHelperText error>Поле обязательное</FormHelperText>
           )}
         </div>
 

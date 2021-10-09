@@ -101,6 +101,7 @@ const MyTextField = ({
       rows={rows}
       multiline={multiline}
       variant={variant}
+      required={rules?.required ? true : false}
     />
   );
 };

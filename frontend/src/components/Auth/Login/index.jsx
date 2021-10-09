@@ -1,5 +1,4 @@
 import { FormHelperText, IconButton } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import React, { useCallback, useState } from "react";
@@ -38,10 +37,6 @@ const useStyles = makeStyles({
   blockInputs: {
     width: "100%",
     marginBottom: "1rem",
-  },
-  error: {
-    color: red[600],
-    fontFamily: "'Montserrat', sans-serif",
   },
 });
 
@@ -108,9 +103,7 @@ const Login = () => {
           />
 
           {form.formState.errors?.email?.type === "required" && (
-            <FormHelperText className={classes.error}>
-              Поле обязательное
-            </FormHelperText>
+            <FormHelperText error>Поле обязательное</FormHelperText>
           )}
 
           <div style={{ height: 15 }} />
@@ -144,9 +137,7 @@ const Login = () => {
           />
 
           {form.formState.errors?.password?.type === "required" && (
-            <FormHelperText className={classes.error}>
-              Поле обязательное
-            </FormHelperText>
+            <FormHelperText error>Поле обязательное</FormHelperText>
           )}
         </div>
 

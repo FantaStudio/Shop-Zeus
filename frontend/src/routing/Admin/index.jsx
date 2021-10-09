@@ -34,6 +34,10 @@ export const Admin = [
     component: Main,
     routes: [
       {
+        path: "/admin/all-products/create",
+        component: CreateProduct,
+      },
+      {
         path: "/admin/all-products/:id",
         component: ProductDetailMain,
         routes: [
@@ -47,10 +51,7 @@ export const Admin = [
           },
         ],
       },
-      {
-        path: "/admin/all-products/create",
-        component: CreateProduct,
-      },
+
       {
         path: "/admin/all-clients",
         component: AllClients,

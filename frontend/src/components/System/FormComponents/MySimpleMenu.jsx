@@ -44,6 +44,7 @@ const MySimpleMenu = ({
         fontFamily: "'Montserrat', sans-serif",
       }}
       select
+      required={rules?.required ? true : false}
     >
       {mapOptions}
     </TextField>

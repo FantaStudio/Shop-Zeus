@@ -1,4 +1,5 @@
 import { DialogActions, LinearProgress } from "@material-ui/core";
+import { red } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import { view } from "@risingstack/react-easy-state";
 import React, { Suspense, useEffect } from "react";
@@ -69,6 +70,11 @@ const useStyles = makeStyles({
     ".MuiCheckbox-colorSecondary.Mui-checked": {
       color: secondaryThemeColor,
     },
+    ".MuiFormHelperText-root.Mui-error": {
+      color: red[600],
+      fontWeight: 700,
+      fontFamily: "'Montserrat', sans-serif",
+    },
     "#root": {
       display: "flex",
       flexDirection: "column",
@@ -101,10 +107,11 @@ const useStyles = makeStyles({
     },
     a: {
       cursor: "pointer",
-      fontWeight: 500,
+      fontWeight: 600,
       transition: "all .2s ease",
       textDecoration: "none",
       letterSpacing: "0.04em",
+      color: secondaryThemeColor,
     },
   },
 });

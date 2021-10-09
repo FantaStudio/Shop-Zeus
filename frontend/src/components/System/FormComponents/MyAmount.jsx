@@ -92,6 +92,7 @@ const MyAmount = ({
       fullWidth
       disabled={disabled}
       label={label}
+      required={rules?.required ? true : false}
     />
   );
 };

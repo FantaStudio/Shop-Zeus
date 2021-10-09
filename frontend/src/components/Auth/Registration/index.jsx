@@ -1,5 +1,4 @@
 import { FormHelperText, IconButton } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import React, { useCallback, useEffect, useState } from "react";
@@ -40,10 +39,6 @@ const useStyles = makeStyles({
     width: "100%",
     marginBottom: "1rem",
     marginTop: "1rem",
-  },
-  error: {
-    color: red[600],
-    fontFamily: "'Montserrat', sans-serif",
   },
 });
 
@@ -114,13 +109,11 @@ const Registration = () => {
           />
 
           {form.formState.errors?.name?.type === "required" && (
-            <FormHelperText className={classes.error}>
-              Поле обязательное
-            </FormHelperText>
+            <FormHelperText error>Поле обязательное</FormHelperText>
           )}
 
           {form.formState.errors?.name?.type === "maxLength" && (
-            <FormHelperText className={classes.error}>
+            <FormHelperText error>
               Поле должно быть не больше 30 символов
             </FormHelperText>
           )}
@@ -151,15 +144,11 @@ const Registration = () => {
           />
 
           {form.formState.errors?.email?.type === "required" && (
-            <FormHelperText className={classes.error}>
-              Поле обязательное
-            </FormHelperText>
+            <FormHelperText error>Поле обязательное</FormHelperText>
           )}
 
           {form.formState.errors?.email?.type === "valid" && (
-            <FormHelperText className={classes.error}>
-              Почта не валидна
-            </FormHelperText>
+            <FormHelperText error>Почта не валидна</FormHelperText>
           )}
 
           <div style={{ height: 15 }} />
@@ -209,15 +198,11 @@ const Registration = () => {
             />
 
             {form.formState.errors?.password?.type === "required" && (
-              <FormHelperText className={classes.error}>
-                Поле обязательное
-              </FormHelperText>
+              <FormHelperText error>Поле обязательное</FormHelperText>
             )}
 
             {form.formState.errors?.password?.type === "valid" && (
-              <FormHelperText className={classes.error}>
-                Пароль не валиден
-              </FormHelperText>
+              <FormHelperText error>Пароль не валиден</FormHelperText>
             )}
 
             <WrapValidatePassword
@@ -273,15 +258,11 @@ const Registration = () => {
           />
 
           {form.formState.errors?.confirmationPassword?.type === "required" && (
-            <FormHelperText className={classes.error}>
-              Поле обязательное
-            </FormHelperText>
+            <FormHelperText error>Поле обязательное</FormHelperText>
           )}
 
           {form.formState.errors?.confirmationPassword?.type === "valid" && (
-            <FormHelperText className={classes.error}>
-              Пароли не совпадают
-            </FormHelperText>
+            <FormHelperText error>Пароли не совпадают</FormHelperText>
           )}
 
           <div style={{ height: 15 }} />
@@ -296,9 +277,7 @@ const Registration = () => {
           />
 
           {form.formState.errors?.phone?.type === "required" && (
-            <FormHelperText className={classes.error}>
-              Поле обязательное
-            </FormHelperText>
+            <FormHelperText error>Поле обязательное</FormHelperText>
           )}
         </div>
 
