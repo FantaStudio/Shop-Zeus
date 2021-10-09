@@ -27,6 +27,7 @@ const MyTextField = ({
   label,
   fullWidth,
   endAdornment,
+  startAdornment,
   rows,
   multiline,
   type,
@@ -75,6 +76,11 @@ const MyTextField = ({
         inputProps: {
           autoComplete: autoComplete || "off",
         },
+        startAdornment: startAdornment ? (
+          <InputAdornment style={{ height: "100%" }} position="end">
+            {startAdornment}
+          </InputAdornment>
+        ) : undefined,
         endAdornment: endAdornment ? (
           <InputAdornment style={{ height: "100%" }} position="end">
             {endAdornment}

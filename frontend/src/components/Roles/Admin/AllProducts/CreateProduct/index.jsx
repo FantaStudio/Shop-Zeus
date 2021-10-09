@@ -296,8 +296,8 @@ const CreateProduct = () => {
 
         <MyTextField
           control={form?.control}
-          name="releases"
-          label="Год релиза"
+          name="countSimCards"
+          label="Количество SIM-карт"
           autoComplete="off"
           rules={{
             required: true,
@@ -314,11 +314,44 @@ const CreateProduct = () => {
           fullWidth
         />
 
-        {form?.formState?.errors?.releases?.type === "required" && (
+        {form?.formState?.errors?.countSimCards?.type === "required" && (
           <FormHelperText error>Поле обязательное</FormHelperText>
         )}
 
-        {form?.formState?.errors?.releases?.type === "valid" && (
+        {form?.formState?.errors?.countSimCards?.type === "valid" && (
+          <FormHelperText error>
+            Поле должно состоять только из цифр
+          </FormHelperText>
+        )}
+
+        <div style={{ height: 10 }} />
+
+        <MyTextField
+          control={form?.control}
+          name="displayInInch"
+          startAdornment={`"`}
+          label="Дисплей (в дюймах)"
+          autoComplete="off"
+          rules={{
+            required: true,
+            validate: {
+              valid: (value) => {
+                if (value && validByNumbers.test(value)) {
+                  return true;
+                }
+
+                return false;
+              },
+            },
+          }}
+          fullWidth
+        />
+
+        {form?.formState?.errors?.displayInInch?.type === "required" && (
+          <FormHelperText error>Поле обязательное</FormHelperText>
+        )}
+
+        {form?.formState?.errors?.displayInInch?.type === "valid" && (
           <FormHelperText error>
             Поле должно состоять только из цифр
           </FormHelperText>
