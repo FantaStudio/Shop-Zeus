@@ -17,7 +17,7 @@ export const useUploadFile = () => {
   );
 
   return {
-      file,
+    file,
     upload,
   };
 };

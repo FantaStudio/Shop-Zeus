@@ -1,8 +1,18 @@
 import { Checkbox, FormControlLabel } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { useController } from "react-hook-form";
 
+const useStyles = makeStyles({
+  root: {
+    fontFamily: "'Montserrat', sans-serif",
+    wordBreak: "break-word",
+  },
+});
+
 const MyCheckboxLabel = ({ control, name, rules, label, disabled }) => {
+  const classes = useStyles();
+
   const { field } = useController({
     name: name,
     control: control,
@@ -16,8 +26,8 @@ const MyCheckboxLabel = ({ control, name, rules, label, disabled }) => {
       labelPlacement="end"
       label={label}
       disabled={disabled}
-      style={{
-        fontFamily: "'Montserrat', sans-serif",
+      classes={{
+        label: classes.root,
       }}
       control={
         <Checkbox
