@@ -210,7 +210,7 @@ const ProductEditable = () => {
 
   return (
     <div className={classes.root}>
-      <h1>Редактирование продукта (телефона)</h1>
+      <h1>Редактирование продукта ({detail?.model})</h1>
 
       <div className={classes.block}>
         <Form form={form} file={file} upload={upload} />
