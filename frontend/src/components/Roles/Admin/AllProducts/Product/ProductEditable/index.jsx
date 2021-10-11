@@ -43,7 +43,7 @@ const ProductEditable = () => {
       price: "",
       file: null,
       guaranteeInMonths: 6,
-      releases: "",
+      release: "",
       color: "",
       supportESim: false,
       support3G: true,
@@ -100,7 +100,7 @@ const ProductEditable = () => {
   const { detail } = location.state || {};
 
   const initialForm = useCallback(() => {
-    if (!detail?.productId) {
+    if (!detail?.model) {
       return;
     }
 
@@ -110,7 +110,9 @@ const ProductEditable = () => {
 
     setTimeout(() => setValue("price", detail?.price), 0);
 
-    upload(detail?.file);
+    if (detail?.file) {
+      upload(detail?.file);
+    }
 
     setTimeout(
       () => setValue("guaranteeInMonths", detail?.guaranteeInMonths),
@@ -225,12 +227,12 @@ const ProductEditable = () => {
           </ZeusButton>
 
           <ZeusButton
-            style={{ backgroundColor: green[600] }}
+            style={{ backgroundColor: green[600], marginLeft: "1rem" }}
             onClick={form.handleSubmit(confirm)}
             loading={loading}
             disabled={!file || loading}
           >
-            Редактировать
+            Сохранить
           </ZeusButton>
         </div>
       </div>

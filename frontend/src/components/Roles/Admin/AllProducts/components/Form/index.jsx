@@ -162,7 +162,7 @@ const Form = ({ file, upload, form }) => {
 
           <MyTextField
             control={form?.control}
-            name="releases"
+            name="release"
             label="Год релиза"
             autoComplete="off"
             rules={{
