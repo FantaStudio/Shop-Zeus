@@ -46,6 +46,8 @@ router.post(
 
 router.post("/api/v1/auth/login", controller.login);
 
+router.get("/api/v1/auth/activate/:link", controller.activate);
+
 router.get(
   "/api/v1/auth/users",
   roleMiddleware(["Admin"]),

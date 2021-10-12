@@ -1,7 +1,11 @@
+require("dotenv").config();
+
 const User = require("../models/User");
 const Role = require("../models/Role");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const uuid = require("uuid");
+const mailService = require("../service/mail");
 
 const { secret } = require("../config");
 
@@ -13,7 +17,7 @@ const generateAccessToken = (id, roles) => {
     roles,
   };
 
-  return jwt.sign(payload, secret, { expiresIn: "24h" });
+  return jwt.sign(payload, secret, { expiresIn: "48h" });
 };
 
 class auth {
@@ -50,6 +54,8 @@ class auth {
 
       const hashPassword = bcrypt.hashSync(password, 7);
 
+      const activationLink = uuid.v4();
+
       const clientRole = await Role.findOne({ value: "Client" });
 
       const user = new User({
@@ -57,8 +63,14 @@ class auth {
         email,
         phone,
         password: hashPassword,
+        activationLink,
         roles: [clientRole.value],
       });
+
+      await mailService.sendActivationEmail(
+        email,
+        `${process.env.API_URL}/api/v1/auth/activate/${activationLink}`
+      );
 
       await user.save();
 
@@ -97,6 +109,13 @@ class auth {
         });
       }
 
+      if (!user?.isActivated) {
+        return res.status(400).json({
+          message: "Авторизация не удалась",
+          description: `Ваша почта еще не подтверждена`,
+        });
+      }
+
       const token = generateAccessToken(user._id, user.roles);
 
       return res.json({ token });
@@ -113,6 +132,32 @@ class auth {
 
       return res.json(users);
     } catch (err) {}
+  }
+
+  async activate(req, res) {
+    try {
+      const activationLink = req.params.link;
+
+      const user = await User.findOne({ activationLink });
+
+      if (!user) {
+        return res.status(400).json({
+          message: "Такого пользователя не существует",
+          description: "",
+        });
+      }
+
+      user.isActivated = true;
+
+      await user.save();
+
+      return res.redirect(`${process.env.CLIENT_URL}/login?confirmEmail=true`);
+    } catch (err) {
+      return res.status(400).json({
+        message: "Подтверждения почты не удалось",
+        description: "",
+      });
+    }
   }
 }
 
