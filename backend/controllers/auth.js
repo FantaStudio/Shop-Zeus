@@ -159,6 +159,24 @@ class auth {
       });
     }
   }
+
+  async fetchProfile(req, res) {
+    try {
+      const user = await User.findOne({ _id: req?.user?.id });
+
+      return res.json({
+        email: user?.email,
+        name: user?.name,
+        phone: user?.phone,
+        roles: user?.roles,
+      });
+    } catch (err) {
+      return res.status(400).json({
+        message: "Возникла ошибка",
+        description: "",
+      });
+    }
+  }
 }
 
 module.exports = new auth();

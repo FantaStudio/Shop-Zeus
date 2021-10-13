@@ -1,11 +1,12 @@
-import { FormHelperText, IconButton } from "@material-ui/core";
+import { DialogActions, FormHelperText, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import React, { useCallback, useState } from "react";
+import { parse } from "query-string";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { secondaryThemeColor } from "../../../helpers/colors";
-import auth from "./../../../store/auth";
+import Alert from "./../../System/Alert";
 import MyTextField from "./../../System/FormComponents/MyTextField";
 import ZeusButton from "./../../System/ZeusButton";
 
@@ -40,6 +41,44 @@ const useStyles = makeStyles({
   },
 });
 
+const DialogConfirmationEmail = () => {
+  const location = useLocation();
+  const ref = useRef(false);
+
+  const [open, setOpen] = useState(false);
+
+  const params = parse(location.search);
+
+  useEffect(() => {
+    if (!ref.current && params?.confirmEmail) {
+      ref.current = true;
+
+      setOpen(true);
+    }
+  }, [params?.confirmEmail]);
+
+  return (
+    <Alert
+      open={open}
+      setOpen={setOpen}
+      customTitle="Поздравляем!"
+      content={
+        <>
+          <p>
+            Ваша почта успешно подтверждена и вы можете авторизоваться. Удачных
+            покупок!
+          </p>
+
+          <DialogActions>
+            <ZeusButton onClick={() => setOpen(false)}>Хорошо!</ZeusButton>
+          </DialogActions>
+        </>
+      }
+      size="xs"
+    />
+  );
+};
+
 const Login = () => {
   const history = useHistory();
   const location = useLocation();
@@ -55,9 +94,8 @@ const Login = () => {
     shouldUnregister: false,
   });
 
-  const confirm = useCallback(
-    (values) => {
-      if (values?.email === "admin@zeus.com" && values?.password === "admin") {
+  const confirm = useCallback((values) => {
+    /* if (values?.email === "admin@zeus.com" && values?.password === "admin") {
         auth.profile = {
           name: "Админ",
           email: "admin@zues.com",
@@ -66,14 +104,16 @@ const Login = () => {
         };
 
         history.push(location?.state?.from || "/admin/all-clients");
-      }
-      console.log(values);
-    },
-    [history, location?.state?.from]
-  );
+      } */
+    console.log(values);
+  }, []);
+
+  const params = parse(location.search);
 
   return (
     <div className={classes.root}>
+      <DialogConfirmationEmail />
+
       <h1>Авторизация</h1>
       <div className={classes.block}>
         {location?.state?.from && (

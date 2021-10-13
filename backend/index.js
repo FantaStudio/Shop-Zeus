@@ -35,3 +35,10 @@ const start = async () => {
 };
 
 start();
+
+/* {
+    "name": "Вася Пупкин",
+    "email": "10iun20002@gmail.com",
+    "phone": "+79880622961",
+    "password": "Qwerty1234"
+} */
