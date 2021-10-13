@@ -13,7 +13,7 @@ const auth = store({
 
       localStorage.setItem("zeusShopToken", data?.token);
 
-      auth.productsInBasket = {
+      auth.profile = {
         name: data?.name,
         email: data?.email,
         phone: data?.phone,
