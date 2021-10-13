@@ -1,5 +1,5 @@
 import { store } from "@risingstack/react-easy-state";
-import { post, showError } from "../api";
+import { get, post, showError } from "../api";
 import { endpoints } from "../endpoints";
 
 const auth = store({
@@ -23,6 +23,29 @@ const auth = store({
       return true;
     } catch (err) {
       showError(err);
+      return false;
+    }
+  },
+
+  async fetchProfile() {
+    try {
+      auth.loading = true;
+
+      const { data } = await get(endpoints.auth.fetchProfile);
+
+      auth.profile = {
+        name: data?.name,
+        email: data?.email,
+        phone: data?.phone,
+        roles: data?.roles || [],
+      };
+
+      auth.loading = false;
+
+      return true;
+    } catch (err) {
+      showError(err);
+      auth.loading = false;
       return false;
     }
   },

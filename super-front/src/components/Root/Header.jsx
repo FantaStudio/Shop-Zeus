@@ -121,6 +121,8 @@ const Header = view(() => {
                   onClick={() => {
                     window.location.replace("/");
 
+                    localStorage.removeItem("zeusShopToken");
+
                     setTimeout(() => (auth.profile = undefined), 200);
                   }}
                 />

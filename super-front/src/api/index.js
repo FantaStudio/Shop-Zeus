@@ -1,15 +1,24 @@
 import axios from "axios";
 import { Buffer } from "buffer";
+import auth from "../store/auth";
 import { is } from "./../helpers/is";
 import ui from "./../store/ui";
 
 axios.interceptors.response.use(
   (response) => {
-    console.log(response?.data);
-
     return response;
   },
   (error) => {
+    const data = error?.response;
+
+    if (data?.status === 403) {
+      window.location.replace("/");
+
+      localStorage.removeItem("zeusShopToken");
+
+      setTimeout(() => (auth.profile = undefined), 200);
+    }
+
     return Promise.reject(error);
   }
 );
@@ -23,7 +32,7 @@ export const headers = () => {
     Authorization = `Bearer ${token}`;
   }
 
-  return Authorization ? { Authorization } : null;
+  return Authorization ? { authorization: Authorization } : null;
 };
 
 export const get = (url, params, responseType, customHeaders = {}) => {
@@ -71,14 +80,13 @@ export const del = (url, payload) =>
 export const showError = (err) => {
   const data = err?.response?.data;
 
-  if (err?.response?.status === 403) {
-    ui.error = { code: 403 };
-  } else if (is(ArrayBuffer, data)) {
+  if (is(ArrayBuffer, data)) {
     const res = {
       description: Buffer.from(err.response.data).toString("utf8"),
     };
+
     ui.error = res;
-  } else if (data && data?.code !== 4010) {
+  } else if (data) {
     ui.error = data;
   }
 };

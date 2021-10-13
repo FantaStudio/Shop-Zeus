@@ -170,7 +170,7 @@ class auth {
     try {
       const user = await User.findOne({ _id: req?.user?.id });
 
-      return res.json({
+      return res.status(200).json({
         email: user?.email,
         name: user?.name,
         phone: user?.phone,

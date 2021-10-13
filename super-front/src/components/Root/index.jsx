@@ -2,7 +2,7 @@ import { DialogActions, LinearProgress } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import { view } from "@risingstack/react-easy-state";
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import { Routes } from "../../routing/Routes";
 import SwitchRoutes from "../../routing/SwitchRoutes";
 import auth from "../../store/auth";
@@ -165,12 +165,59 @@ const GlobalSuccessOrder = view(() => {
   );
 });
 
-const Root = () => {
+const InitUser = view(() => {
+  const ref = useRef(false);
+  const { profile } = auth;
+
+  useEffect(() => {
+    const token = localStorage.getItem("zeusShopToken");
+
+    if (profile) {
+      ref.current = true;
+    } else if (token && !ref.current) {
+      ref.current = true;
+
+      auth.fetchProfile();
+    }
+  }, [profile]);
+
+  return null;
+});
+
+const Error = view(() => {
+  return (
+    <Alert
+      open={Boolean(ui.error)}
+      customClose={() => (ui.error = undefined)}
+      customTitle={ui.error?.message}
+      content={
+        <>
+          <p>{ui?.error?.description}</p>
+
+          <DialogActions>
+            <ZeusButton onClick={() => (ui.error = undefined)}>Окей</ZeusButton>
+          </DialogActions>
+        </>
+      }
+      size="xs"
+    />
+  );
+});
+
+const Root = view(() => {
   useStyles();
 
-  return (
+  return auth?.loading ? (
     <>
+      <LinearProgress />
+    </>
+  ) : (
+    <>
+      <Error />
+
       <Header />
+
+      <InitUser />
 
       <SyncShoppingBasket />
 
@@ -183,6 +230,6 @@ const Root = () => {
       </main>
     </>
   );
-};
+});
 
 export default Root;
