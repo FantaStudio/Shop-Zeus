@@ -1,6 +1,7 @@
+import { Admin } from "./Admin";
+import { Profile } from "./Profile";
+
 const { lazy } = require("react");
-import { Admin } from "./Admin/index";
-import { Profile } from "./Profile/index";
 
 const Catalog = lazy(() => import("../components/Catalog"));
 

@@ -81,7 +81,7 @@ class auth {
     } catch (err) {
       console.log(err);
 
-      res
+      return res
         .status(400)
         .json({ message: "Регистрация не удалась", description: "" });
     }
@@ -118,9 +118,15 @@ class auth {
 
       const token = generateAccessToken(user._id, user.roles);
 
-      return res.json({ token });
+      return res.status(200).json({
+        token,
+        email: user?.email,
+        name: user?.name,
+        phone: user?.phone,
+        roles: user?.roles,
+      });
     } catch (err) {
-      res
+      return res
         .status(400)
         .json({ message: "Авторизация не удалась", description: "" });
     }

@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { secondaryThemeColor } from "../../../helpers/colors";
+import auth from "../../../store/auth";
 import Alert from "./../../System/Alert";
 import MyTextField from "./../../System/FormComponents/MyTextField";
 import ZeusButton from "./../../System/ZeusButton";
@@ -84,6 +85,7 @@ const Login = () => {
   const location = useLocation();
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const form = useForm({
     defaultValues: {
@@ -94,8 +96,9 @@ const Login = () => {
     shouldUnregister: false,
   });
 
-  const confirm = useCallback((values) => {
-    /* if (values?.email === "admin@zeus.com" && values?.password === "admin") {
+  const confirm = useCallback(
+    async (values) => {
+      /* if (values?.email === "admin@zeus.com" && values?.password === "admin") {
         auth.profile = {
           name: "Админ",
           email: "admin@zues.com",
@@ -105,8 +108,19 @@ const Login = () => {
 
         history.push(location?.state?.from || "/admin/all-clients");
       } */
-    console.log(values);
-  }, []);
+
+      setLoading(true);
+
+      const result = await auth.login(values?.email, values?.password);
+
+      if (result) {
+        history.push(location?.state?.from || "/");
+      }
+
+      setLoading(false);
+    },
+    [history, location?.state?.from]
+  );
 
   const params = parse(location.search);
 
