@@ -6,4 +6,7 @@ export const endpoints = {
     register: `${url_backend}/v1/auth/register`,
     fetchProfile: `${url_backend}/v1/auth/profile`,
   },
+  admin: {
+    fetchClients: `${url_backend}/v1/admin/users`,
+  },
 };

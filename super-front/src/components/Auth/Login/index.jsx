@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { secondaryThemeColor } from "../../../helpers/colors";
+import { redirects } from "../../../helpers/redirects";
 import auth from "../../../store/auth";
 import Alert from "./../../System/Alert";
 import MyTextField from "./../../System/FormComponents/MyTextField";
@@ -98,31 +99,19 @@ const Login = () => {
 
   const confirm = useCallback(
     async (values) => {
-      /* if (values?.email === "admin@zeus.com" && values?.password === "admin") {
-        auth.profile = {
-          name: "Админ",
-          email: "admin@zues.com",
-          phone: "+79173212312",
-          roles: ["Admin"],
-        };
-
-        history.push(location?.state?.from || "/admin/all-clients");
-      } */
-
       setLoading(true);
 
       const result = await auth.login(values?.email, values?.password);
 
       if (result) {
-        history.push(location?.state?.from || "/");
+        console.log(result);
+        redirects(result?.roles, history, location);
       }
 
       setLoading(false);
     },
-    [history, location?.state?.from]
+    [history, location]
   );
-
-  const params = parse(location.search);
 
   return (
     <div className={classes.root}>
@@ -196,7 +185,9 @@ const Login = () => {
         </div>
 
         <div className={classes.actions}>
-          <ZeusButton onClick={form.handleSubmit(confirm)}>Войти</ZeusButton>
+          <ZeusButton onClick={form.handleSubmit(confirm)} loading={loading}>
+            Войти
+          </ZeusButton>
           <Link to="/registration" className={classes.link}>
             Нет аккаунта? Зарегистрироваться
           </Link>

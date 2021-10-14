@@ -49,3 +49,10 @@ start();
     "phone": "+79880622961",
     "password": "Qwerty1234"
 } */
+
+/* {
+    "name": "Админ",
+    "email": "admin@zeus.com",
+    "phone": "+79885642341",
+    "password": "AminZeus21*"
+} */

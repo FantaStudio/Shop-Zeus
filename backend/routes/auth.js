@@ -44,7 +44,15 @@ router.post(
   controller.register
 );
 
-router.post("/api/v1/auth/login", controller.login);
+router.post(
+  "/api/v1/auth/login",
+  [
+    check("email", "Почта пользователя обязательна").notEmpty(),
+    check("email", "Почта введена неправильно").isEmail(),
+    check("password", "Пароль пользователя обязателен").notEmpty(),
+  ],
+  controller.login
+);
 
 router.get("/api/v1/auth/activate/:link", controller.activate);
 

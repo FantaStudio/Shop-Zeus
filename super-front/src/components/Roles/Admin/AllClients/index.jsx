@@ -2,6 +2,7 @@ import { LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import SearchField from "../../../System/SearchField";
+import admin from "./../../../../store/admin";
 import ZeusTable from "./../../../System/ZeusTable";
 
 const useStyles = makeStyles({
@@ -31,7 +32,7 @@ const AllClients = () => {
 
   const params = useRef({
     page: 1,
-    perPage: 15,
+    perPage: 1,
   });
 
   const fetcher = useCallback(async (newParams) => {
@@ -42,15 +43,7 @@ const AllClients = () => {
       ...newParams,
     };
 
-    const result = await {
-      data: [
-        { name: "Вася Пупкин", phone: "+79880622961", email: "vasya22" },
-        { name: "Вася Пупкин", phone: "+79880622961", email: "vasya22" },
-
-        { name: "Вася Пупкин", phone: "+79880622961", email: "vasya22" },
-      ],
-      pages: 1,
-    };
+    const result = await admin.fetchClients(params.current);
 
     if (result) {
       setItems(result?.data);

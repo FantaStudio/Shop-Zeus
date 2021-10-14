@@ -20,7 +20,7 @@ const auth = store({
         roles: data?.roles || [],
       };
 
-      return true;
+      return data;
     } catch (err) {
       showError(err);
       return false;
@@ -42,7 +42,7 @@ const auth = store({
 
       auth.loading = false;
 
-      return true;
+      return data;
     } catch (err) {
       showError(err);
       auth.loading = false;

@@ -89,6 +89,15 @@ class auth {
 
   async login(req, res) {
     try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          message: "Авторизация не удалась",
+          description: errors?.errors[0]?.msg,
+        });
+      }
+
       const { email, password } = req?.body;
 
       const user = await User.findOne({ email });
@@ -130,14 +139,6 @@ class auth {
         .status(400)
         .json({ message: "Авторизация не удалась", description: "" });
     }
-  }
-
-  async fetchUsers(req, res) {
-    try {
-      const users = await User.find();
-
-      return res.json(users);
-    } catch (err) {}
   }
 
   async activate(req, res) {
