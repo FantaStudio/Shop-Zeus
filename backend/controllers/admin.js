@@ -32,11 +32,14 @@ class admin {
           customLabels: myCustomLabels,
         },
         function (err, result) {
-          return res.json(result);
+          return res.status(200).json(result);
         }
       );
     } catch (err) {
-      return res.status(400).json(err);
+      return res.status(400).json({
+        message: "Возникла ошибка",
+        description: "При запросе всех пользователей сайта возникла проблема",
+      });
     }
   }
 }

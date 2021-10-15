@@ -1,8 +1,11 @@
 import { green } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
+import numbro from "numbro";
 import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import { useUploadFile } from "../../../../../hooks/useUploadFile";
+import products from "../../../../../store/products";
 import Form from "../components/Form";
 import ZeusButton from "./../../../../System/ZeusButton";
 
@@ -27,6 +30,8 @@ const useStyles = makeStyles({
 
 const CreateProduct = () => {
   const classes = useStyles();
+  const history = useHistory();
+
   const [loading, setLoading] = useState(false);
 
   const { file, upload } = useUploadFile();
@@ -78,13 +83,22 @@ const CreateProduct = () => {
     shouldUnregister: false,
   });
 
-  const confirm = useCallback((values) => {
-    setLoading(true);
+  const confirm = useCallback(
+    async (values) => {
+      setLoading(true);
 
-    console.log(values);
+      values.price = numbro.unformat(values.price);
 
-    setLoading(false);
-  }, []);
+      const result = await products.createProduct({ ...values, file });
+
+      if (result) {
+        history.goBack();
+      }
+
+      setLoading(false);
+    },
+    [file, history]
+  );
 
   return (
     <div className={classes.root}>

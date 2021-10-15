@@ -2,6 +2,7 @@ import { LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import products from "../../../../../../store/products";
 import Field from "../../../../../ProductDetail/components/Field";
 import ZeusButton from "./../../../../../System/ZeusButton";
 
@@ -35,55 +36,17 @@ const DetailInformation = () => {
   const [loading, setLoading] = useState(false);
   const [detail, setDetail] = useState({});
 
-  const fetchDetail = useCallback(() => {
+  const fetchDetail = useCallback(async () => {
     setLoading(true);
 
-    setDetail({
-      model: "Iphone",
-      manufacturer: "Apple",
-      imageHref: "/images/phone.jpg",
-      price: "89000",
-      file: null,
-      guaranteeInMonths: 6,
-      release: "2021",
-      color: "Черный",
-      supportESim: true,
-      support3G: true,
-      supportLte: true,
-      support5G: true,
-      formatSim: "nano",
-      countSimCards: 2,
-      displayInInch: 6,
-      screenResolution: "1000x600",
-      aspectRadio: "17:9",
-      countColorIsDisplay: 500,
-      updateFrequency: 60,
-      materialType: "Plastic",
-      osVersion: "IOS",
-      supportGoogleMobileService: true,
-      manufacturerCPU: "Intel",
-      modelCPU: "core i9",
-      countCores: 12,
-      frequencyCPU: 90,
-      ramSize: 20,
-      builtInMemory: 120,
-      backCameraMp: 40,
-      frontCameraMp: 20,
-      versionBluetooth: 5,
-      standardWiFi: 6,
-      NFC: true,
-      cableInterface: "micro usb",
-      batteryCapacity: 4000,
-      supportQuickCharger: true,
-      supportWirelessCharger: true,
-      width: 600,
-      height: 300,
-      thickness: 10,
-      weight: 10,
-    });
+    const result = await products.fetchProductByAdmin(id);
+
+    if (result) {
+      setDetail(result);
+    }
 
     setLoading(false);
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     fetchDetail();
@@ -102,7 +65,12 @@ const DetailInformation = () => {
             marginBottom: "1rem",
           }}
         >
-          <img style={{ width: 300 }} src={detail?.imageHref} />
+          <img
+            style={{ width: 300 }}
+            id="image"
+            alt=""
+            src={detail?.imageHref}
+          />
         </div>
 
         <Field left="Цена" right={`₽ ${detail?.price}`} />

@@ -1,4 +1,6 @@
 import { store } from "@risingstack/react-easy-state";
+import { endpoints } from "../endpoints";
+import { get, post, showError } from "./../api/index";
 
 const products = store({
   loading: false,
@@ -259,6 +261,102 @@ const products = store({
     builtInMemory: [],
     ramSize: [],
     haveNfc: "",
+  },
+
+  /* 
+     {
+        model,
+        manufacturer,
+        price,
+        file,
+        guaranteeInMonths,
+        release,
+        color,
+        supportESim,
+        support3G,
+        supportLte,
+        support5G,
+        formatSim,
+        countSimCards,
+        displayInInch,
+        screenResolution,
+        aspectRadio,
+        countColorIsDisplay,
+        updateFrequency,
+        materialType,
+        osVersion,
+        supportGoogleMobileService,
+        manufacturerCPU,
+        modelCPU,
+        countCores,
+        frequencyCPU,
+        ramSize,
+        builtInMemory,
+        backCameraMp,
+        frontCameraMp,
+        versionBluetooth,
+        standardWiFi,
+        NFC,
+        cableInterface,
+        batteryCapacity,
+        supportQuickCharger,
+        supportWirelessCharger,
+        width,
+        height,
+        thickness,
+        weight,
+        file
+      }
+  
+  */
+
+  async createProduct(payload) {
+    try {
+      const formData = new FormData();
+
+      const keys = Object.keys(payload);
+
+      keys?.forEach((key) => {
+        formData.append(key, payload[key]);
+      });
+
+      await post(endpoints.products.createProduct, formData, {
+        "Content-Type": "multipart/form-data",
+        Accept: true,
+      });
+
+      return true;
+    } catch (err) {
+      showError(err);
+      return false;
+    }
+  },
+
+  async fetchProductsByAdmin(params = {}) {
+    try {
+      const { data } = await get(
+        endpoints.products.fetchProductsByAdmin,
+        params
+      );
+
+      return data;
+    } catch (err) {
+      showError(err);
+      return false;
+    }
+  },
+
+  async fetchProductByAdmin(productId) {
+    try {
+      const { data } = await get(
+        endpoints.products.fetchProductByAdmin.replace("{productId}", productId)
+      );
+
+      return data;
+    } catch (err) {
+      showError(err);
+      return false;
+    }
   },
 });
 

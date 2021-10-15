@@ -1,0 +1,65 @@
+const { Schema, model } = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
+
+const Product = new Schema({
+  name: { type: String },
+  model: { type: String, required: true },
+  manufacturer: { type: String, required: true },
+  imageHref: { type: String, required: true },
+  price: { type: Number, required: true },
+  guaranteeInMonths: { type: Number, required: true },
+  release: { type: String, required: true },
+  supportESim: { type: Boolean, required: true },
+  support3G: { type: Boolean, required: true },
+  supportLte: { type: Boolean, required: true },
+  support5G: { type: Boolean, required: true },
+  formatSim: { type: String, required: true },
+  countSimCards: { type: Number, required: true },
+  displayInInch: { type: Number, required: true },
+  screenResolution: { type: String, required: true },
+  aspectRadio: { type: String, required: true },
+  countColorIsDisplay: { type: Number, required: true },
+  updateFrequency: { type: String, required: true },
+  materialType: { type: String, required: true },
+  osVersion: { type: String, required: true },
+  supportGoogleMobileService: { type: Boolean, required: true },
+  manufacturerCPU: { type: String, required: true },
+  modelCPU: { type: String, required: true },
+  countCores: { type: Number, required: true },
+  frequencyCPU: { type: String, required: true },
+  ramSize: { type: Number, required: true },
+  builtInMemory: { type: Number, required: true },
+  backCameraMp: { type: Number, required: true },
+  frontCameraMp: { type: Number, required: true },
+  versionBluetooth: { type: String, required: true },
+  standardWiFi: { type: String, required: true },
+  NFC: { type: Boolean, required: true },
+  cableInterface: { type: String, required: true },
+  batteryCapacity: { type: String, required: true },
+  supportQuickCharger: { type: Boolean, required: true },
+  supportWirelessCharger: { type: Boolean, required: true },
+  width: { type: Number, required: true },
+  height: { type: Number, required: true },
+  thickness: { type: Number, required: true },
+  weight: { type: Number, required: true },
+});
+
+Product.index({
+  model: "text",
+  manufacturer: "text",
+  price: "text",
+  release: "text",
+  formatSim: "text",
+  displayInInch: "text",
+  screenResolution: "text",
+  aspectRadio: "text",
+  materialType: "text",
+  osVersion: "text",
+  manufacturerCPU: "text",
+  modelCPU: "text",
+  name: "text",
+});
+
+Product.plugin(mongoosePaginate);
+
+module.exports = model("Product", Product);

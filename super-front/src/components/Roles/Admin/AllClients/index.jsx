@@ -32,7 +32,7 @@ const AllClients = () => {
 
   const params = useRef({
     page: 1,
-    perPage: 1,
+    perPage: 10,
   });
 
   const fetcher = useCallback(async (newParams) => {
@@ -86,7 +86,7 @@ const AllClients = () => {
 
   const onSearch = useCallback(
     (search) => {
-      fetcher({ search });
+      fetcher({ page: 1, search });
     },
     [fetcher]
   );

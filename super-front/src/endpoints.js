@@ -9,4 +9,9 @@ export const endpoints = {
   admin: {
     fetchClients: `${url_backend}/v1/admin/users`,
   },
+  products: {
+    createProduct: `${url_backend}/v1/admin/products`,
+    fetchProductsByAdmin: `${url_backend}/v1/admin/products`,
+    fetchProductByAdmin: `${url_backend}/v1/admin/products/{productId}`,
+  },
 };

@@ -2,6 +2,7 @@ import { LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import products from "../../../../store/products";
 import SearchField from "../../../System/SearchField";
 import ZeusButton from "./../../../System/ZeusButton";
 import ZeusTable from "./../../../System/ZeusTable";
@@ -33,7 +34,7 @@ const AllProducts = () => {
 
   const params = useRef({
     page: 1,
-    perPage: 15,
+    perPage: 10,
   });
 
   const fetcher = useCallback(async (newParams) => {
@@ -44,26 +45,7 @@ const AllProducts = () => {
       ...newParams,
     };
 
-    const result = await {
-      data: [
-        {
-          productId: 1,
-          name: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
-          price: 2000,
-        },
-        {
-          productId: 2,
-          name: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
-          price: 3000,
-        },
-        {
-          productId: 3,
-          name: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
-          price: 4000,
-        },
-      ],
-      pages: 2,
-    };
+    const result = await products.fetchProductsByAdmin(params.current);
 
     if (result) {
       setItems(result?.data);
@@ -81,7 +63,7 @@ const AllProducts = () => {
         disableSortBy: true,
         accessor: (rowData) => {
           return (
-            <Link to={`/admin/all-products/${rowData?.productId}`}>
+            <Link to={`/admin/all-products/${rowData?._id}`}>
               {rowData?.name}
             </Link>
           );
@@ -103,7 +85,7 @@ const AllProducts = () => {
 
   const onSearch = useCallback(
     (search) => {
-      fetcher({ search });
+      fetcher({ search, page: 1 });
     },
     [fetcher]
   );
