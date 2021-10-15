@@ -358,6 +358,31 @@ const products = store({
       return false;
     }
   },
+
+  async replaceImage(productId, file) {
+    try {
+      const formData = new FormData();
+
+      formData.append("image", file);
+
+      const { data } = await post(
+        endpoints.products.replaceImageByAdmin.replace(
+          "{productId}",
+          productId
+        ),
+        formData,
+        {
+          "Content-Type": "multipart/form-data",
+          Accept: true,
+        }
+      );
+
+      return data;
+    } catch (err) {
+      showError(err);
+      return false;
+    }
+  },
 });
 
 export default products;

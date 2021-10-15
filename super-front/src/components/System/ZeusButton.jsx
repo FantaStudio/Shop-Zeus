@@ -25,6 +25,7 @@ const ZeusButton = ({
   style = {},
   onClick,
   loading,
+  disabled,
   fullWidth,
   ...rest
 }) => {
@@ -38,7 +39,7 @@ const ZeusButton = ({
       onClick={onClick}
       style={style}
       fullWidth={fullWidth}
-      disabled={loading}
+      disabled={loading || disabled}
     >
       {children}
       <LoadingCircular loading={loading} />

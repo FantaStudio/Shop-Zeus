@@ -49,4 +49,10 @@ router.post(
   controller.createProduct
 );
 
+router.post(
+  `/api/v1/admin/products/replace-image/:productId`,
+  [roleMiddleware(["Admin"]), upload.any()],
+  controller.replaceImage
+);
+
 module.exports = router;

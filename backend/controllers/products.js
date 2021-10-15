@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+var fs = require("fs");
 
 const myCustomLabels = {
   totalDocs: "total",
@@ -184,6 +185,48 @@ class products {
       return res.status(400).json({
         message: "Возникла ошибка",
         description: "При создании данного продукта возникла проблема",
+      });
+    }
+  }
+
+  async replaceImage(req, res) {
+    try {
+      const { productId } = req.params;
+
+      const file = req?.files?.[0] || [];
+
+      const product = await Product.findById(productId).exec();
+
+      if (!product) {
+        return res.status(400).json({
+          message: "Возникла ошибка",
+          description: "Такой продукт не найден в базе данных",
+        });
+      }
+
+      const splitMass = product.imageHref.split("/");
+
+      const oldFileName = splitMass?.[splitMass?.length - 1];
+
+      if (!oldFileName) {
+        return res.status(400).json({
+          message: "Возникла ошибка",
+          description: "Старая фотография этого продукта не найдена",
+        });
+      }
+
+      await fs.unlinkSync(`public/images/${oldFileName}`);
+
+      product.imageHref = `http://localhost:3000/static/images/${file?.filename}`;
+
+      await product.save();
+
+      return res.status(200).json({ imageHref: product.imageHref });
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({
+        message: "Возникла ошибка",
+        description: "При замене фотографии товару произошла ошибка",
       });
     }
   }
