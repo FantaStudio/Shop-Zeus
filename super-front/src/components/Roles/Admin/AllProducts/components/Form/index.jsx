@@ -1,6 +1,7 @@
 import { FormHelperText } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
+import { useLocation } from "react-router-dom";
 import MyAmount from "../../../../../System/FormComponents/MyAmount";
 import MyCheckboxLabel from "../../../../../System/FormComponents/MyCheckboxLabel";
 import MySimpleMenu from "../../../../../System/FormComponents/MySimpleMenu";
@@ -83,6 +84,7 @@ const useStyles = makeStyles({
 
 const Form = ({ file, upload, form }) => {
   const classes = useStyles();
+  const location = useLocation();
 
   const optionsManufacturer = products.manufacturesVariables.map((item) => {
     return { label: item, value: item };
@@ -90,11 +92,13 @@ const Form = ({ file, upload, form }) => {
 
   return (
     <>
-      <div className={classes.imageBlock}>
-        <h2 className={classes.header}>Загрузите изображение</h2>
+      {!location.pathname?.includes("edit") && (
+        <div className={classes.imageBlock}>
+          <h2 className={classes.header}>Загрузите изображение</h2>
 
-        <UploadArea file={file} upload={upload} />
-      </div>
+          <UploadArea file={file} upload={upload} />
+        </div>
+      )}
 
       <div style={{ height: 20 }} />
 

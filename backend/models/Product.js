@@ -42,6 +42,7 @@ const Product = new Schema({
   height: { type: Number, required: true },
   thickness: { type: Number, required: true },
   weight: { type: Number, required: true },
+  color: { type: "String", required: true, default: "черный" },
 });
 
 Product.index({
@@ -58,6 +59,7 @@ Product.index({
   manufacturerCPU: "text",
   modelCPU: "text",
   name: "text",
+  color: "text",
 });
 
 Product.plugin(mongoosePaginate);

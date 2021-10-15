@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useLocation } from "react-router-dom";
-import { useUploadFile } from "../../../../../../hooks/useUploadFile";
 import ZeusButton from "../../../../../System/ZeusButton";
 import Form from "../../components/Form";
 
@@ -34,14 +33,11 @@ const ProductEditable = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const { file, upload } = useUploadFile();
-
   const form = useForm({
     defaultValues: {
       model: "",
       manufacturer: "",
       price: "",
-      file: null,
       guaranteeInMonths: 6,
       release: "",
       color: "",
@@ -109,10 +105,6 @@ const ProductEditable = () => {
     setTimeout(() => setValue("manufacturer", detail?.manufacturer), 0);
 
     setTimeout(() => setValue("price", detail?.price), 0);
-
-    if (detail?.file) {
-      upload(detail?.file);
-    }
 
     setTimeout(
       () => setValue("guaranteeInMonths", detail?.guaranteeInMonths),
@@ -204,7 +196,7 @@ const ProductEditable = () => {
     setTimeout(() => setValue("thickness", detail?.thickness), 0);
 
     setTimeout(() => setValue("weight", detail?.weight), 0);
-  }, [detail, setValue, upload]);
+  }, [detail, setValue]);
 
   useEffect(() => {
     initialForm();
@@ -215,13 +207,13 @@ const ProductEditable = () => {
       <h1>Редактирование продукта ({detail?.model})</h1>
 
       <div className={classes.block}>
-        <Form form={form} file={file} upload={upload} />
+        <Form form={form} />
 
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <ZeusButton
             onClick={history.goBack}
             loading={loading}
-            disabled={!file || loading}
+            disabled={loading}
           >
             Отмена
           </ZeusButton>
@@ -230,7 +222,7 @@ const ProductEditable = () => {
             style={{ backgroundColor: green[600], marginLeft: "1rem" }}
             onClick={form.handleSubmit(confirm)}
             loading={loading}
-            disabled={!file || loading}
+            disabled={loading}
           >
             Сохранить
           </ZeusButton>
