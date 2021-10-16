@@ -16,7 +16,10 @@ const BlockPrice = view(() => {
         <CustomTextField
           value={products.params.fromPrice || ""}
           placeholder="От"
-          onChange={(e, value) => (products.params.fromPrice = value)}
+          onChange={(e, value) => {
+            products.params.page = 1;
+            products.params.fromPrice = value;
+          }}
           fullWidth
         />{" "}
       </div>
@@ -25,7 +28,10 @@ const BlockPrice = view(() => {
         <CustomTextField
           value={products.params.toPrice || ""}
           placeholder="До"
-          onChange={(e, value) => (products.params.toPrice = value)}
+          onChange={(e, value) => {
+            products.params.page = 1;
+            products.params.toPrice = value;
+          }}
           fullWidth
         />
       </div>

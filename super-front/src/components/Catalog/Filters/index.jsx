@@ -131,7 +131,10 @@ const Filters = view(() => {
           <div>
             <CustomRadioButtons
               value={products.params.haveNfc || ""}
-              onChange={(e, value) => (products.params.haveNfc = value)}
+              onChange={(e, value) => {
+                products.params.page = 1;
+                products.params.haveNfc = value;
+              }}
               items={optionsHaveNFC}
             />
           </div>

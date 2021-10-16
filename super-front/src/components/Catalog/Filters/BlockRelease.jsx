@@ -12,6 +12,8 @@ const BlockRelease = view(() => {
           checked={products.params.releases.includes(item)}
           label={item}
           onChange={(e, checked) => {
+            products.params.page = 1;
+
             if (checked) {
               products.params.releases = [...products.params.releases, item];
             } else {
@@ -33,6 +35,8 @@ const BlockRelease = view(() => {
         }
         label="Выбрать все"
         onChange={(e, checked) => {
+          products.params.page = 1;
+
           if (checked) {
             products.params.releases = products.releaseVariables;
           } else {

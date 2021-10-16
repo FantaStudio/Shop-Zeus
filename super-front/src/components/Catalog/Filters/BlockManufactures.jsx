@@ -12,6 +12,8 @@ const BlockManufactures = view(() => {
           checked={products.params.manufacturers.includes(item)}
           label={item}
           onChange={(e, checked) => {
+            products.params.page = 1;
+
             if (checked) {
               products.params.manufacturers = [
                 ...products.params.manufacturers,
@@ -36,6 +38,8 @@ const BlockManufactures = view(() => {
         }
         label="Выбрать все"
         onChange={(e, checked) => {
+          products.params.page = 1;
+
           if (checked) {
             products.params.manufacturers = products.manufacturesVariables;
           } else {

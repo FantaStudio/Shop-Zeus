@@ -12,6 +12,8 @@ const BlockRamSize = view(() => {
           checked={products.params.ramSize.includes(item)}
           label={`${item} Гб`}
           onChange={(e, checked) => {
+            products.params.page = 1;
+
             if (checked) {
               products.params.ramSize = [...products.params.ramSize, item];
             } else {
@@ -33,6 +35,8 @@ const BlockRamSize = view(() => {
         }
         label="Выбрать все"
         onChange={(e, checked) => {
+          products.params.page = 1;
+
           if (checked) {
             products.params.ramSize = products.ramSizeVariables;
           } else {

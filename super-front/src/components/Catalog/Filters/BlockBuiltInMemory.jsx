@@ -12,6 +12,8 @@ const BlockBuiltInMemory = view(() => {
           checked={products.params.builtInMemory.includes(item)}
           label={`${item} Гб`}
           onChange={(e, checked) => {
+            products.params.page = 1;
+
             if (checked) {
               products.params.builtInMemory = [
                 ...products.params.builtInMemory,
@@ -36,6 +38,8 @@ const BlockBuiltInMemory = view(() => {
         }
         label="Выбрать все"
         onChange={(e, checked) => {
+          products.params.page = 1;
+
           if (checked) {
             products.params.builtInMemory = products.builtInMemoryVariables;
           } else {
