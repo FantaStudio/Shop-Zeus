@@ -2,7 +2,8 @@ import { green } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
+import products from "../../../../../../store/products";
 import ZeusButton from "../../../../../System/ZeusButton";
 import Form from "../../components/Form";
 
@@ -28,6 +29,8 @@ const useStyles = makeStyles({
 const ProductEditable = () => {
   const classes = useStyles();
   const history = useHistory();
+
+  const match = useRouteMatch();
 
   const location = useLocation();
 
@@ -79,19 +82,6 @@ const ProductEditable = () => {
     shouldUnregister: false,
   });
 
-  const confirm = useCallback(
-    (values) => {
-      setLoading(true);
-
-      console.log(values);
-
-      history.goBack();
-
-      setLoading(false);
-    },
-    [history]
-  );
-
   const { setValue } = form;
   const { detail } = location.state || {};
 
@@ -111,7 +101,7 @@ const ProductEditable = () => {
       0
     );
 
-    setTimeout(() => setValue("releases", detail?.releases), 0);
+    setTimeout(() => setValue("release", detail?.release), 0);
 
     setTimeout(() => setValue("color", detail?.color), 0);
 
@@ -201,6 +191,31 @@ const ProductEditable = () => {
   useEffect(() => {
     initialForm();
   }, [initialForm]);
+
+  const confirm = useCallback(
+    async (values) => {
+      setLoading(true);
+
+      const payload = {};
+
+      const keys = Object?.keys(values);
+
+      keys.forEach((key) => {
+        if (values?.[key] !== undefined && values?.[key] !== detail?.[key]) {
+          payload[key] = values[key];
+        }
+      });
+
+      const result = await products.changeProduct(match.params?.id, payload);
+
+      if (result) {
+        history.goBack();
+      }
+
+      setLoading(false);
+    },
+    [detail, history, match.params?.id]
+  );
 
   return (
     <div className={classes.root}>

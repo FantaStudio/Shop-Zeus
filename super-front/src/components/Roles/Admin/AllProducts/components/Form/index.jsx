@@ -184,11 +184,11 @@ const Form = ({ file, upload, form }) => {
             fullWidth
           />
 
-          {form?.formState?.errors?.releases?.type === "required" && (
+          {form?.formState?.errors?.release?.type === "required" && (
             <FormHelperText error>Поле обязательное</FormHelperText>
           )}
 
-          {form?.formState?.errors?.releases?.type === "valid" && (
+          {form?.formState?.errors?.release?.type === "valid" && (
             <FormHelperText error>
               Поле должно состоять только из цифр
             </FormHelperText>

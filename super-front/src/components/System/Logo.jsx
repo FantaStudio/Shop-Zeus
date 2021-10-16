@@ -1,6 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { view } from "@risingstack/react-easy-state";
 import React from "react";
 import { Link } from "react-router-dom";
+import auth from "../../store/auth";
 
 const useStyles = makeStyles({
   root: {
@@ -13,16 +15,20 @@ const useStyles = makeStyles({
   },
 });
 
-const Logo = () => {
+const Logo = view(() => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Link to="/">
+      <Link
+        to={
+          auth?.profile?.roles?.includes("Admin") ? "/admin/all-clients" : "/"
+        }
+      >
         <img src="/images/logotip.png" alt="logo" className={classes.image} />
       </Link>
     </div>
   );
-};
+});
 
 export default Logo;

@@ -43,6 +43,12 @@ router.get(
   controller.fetchProductById
 );
 
+router.patch(
+  `/api/v1/admin/products/:productId`,
+  roleMiddleware(["Admin"]),
+  controller.changeProduct
+);
+
 router.post(
   `/api/v1/admin/products`,
   [roleMiddleware(["Admin"]), upload.any()],

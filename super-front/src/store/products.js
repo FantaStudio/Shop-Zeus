@@ -1,6 +1,6 @@
 import { store } from "@risingstack/react-easy-state";
 import { endpoints } from "../endpoints";
-import { get, post, showError } from "./../api/index";
+import { get, patch, post, showError } from "./../api/index";
 
 const products = store({
   loading: false,
@@ -263,53 +263,6 @@ const products = store({
     haveNfc: "",
   },
 
-  /* 
-     {
-        model,
-        manufacturer,
-        price,
-        file,
-        guaranteeInMonths,
-        release,
-        color,
-        supportESim,
-        support3G,
-        supportLte,
-        support5G,
-        formatSim,
-        countSimCards,
-        displayInInch,
-        screenResolution,
-        aspectRadio,
-        countColorIsDisplay,
-        updateFrequency,
-        materialType,
-        osVersion,
-        supportGoogleMobileService,
-        manufacturerCPU,
-        modelCPU,
-        countCores,
-        frequencyCPU,
-        ramSize,
-        builtInMemory,
-        backCameraMp,
-        frontCameraMp,
-        versionBluetooth,
-        standardWiFi,
-        NFC,
-        cableInterface,
-        batteryCapacity,
-        supportQuickCharger,
-        supportWirelessCharger,
-        width,
-        height,
-        thickness,
-        weight,
-        file
-      }
-  
-  */
-
   async createProduct(payload) {
     try {
       const formData = new FormData();
@@ -375,6 +328,23 @@ const products = store({
           "Content-Type": "multipart/form-data",
           Accept: true,
         }
+      );
+
+      return data;
+    } catch (err) {
+      showError(err);
+      return false;
+    }
+  },
+
+  async changeProduct(productId, payload) {
+    try {
+      const { data } = await patch(
+        endpoints.products.changeProductByAdmin.replace(
+          "{productId}",
+          productId
+        ),
+        payload
       );
 
       return data;

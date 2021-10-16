@@ -230,6 +230,96 @@ class products {
       });
     }
   }
+
+  async changeProduct(req, res) {
+    try {
+      const { productId } = req.params;
+
+      const { body } = req;
+
+      const product = await Product.findById(productId).exec();
+
+      if (!product) {
+        return res.status(400).json({
+          message: "Возникла ошибка",
+          description: "Такой продукт не найден в базе данных",
+        });
+      }
+
+      const name = `"${body?.displayInInch ?? product.displayInInch} ${
+        body?.manufacturer ?? product.manufacturer
+      } ${body?.model ?? product.model} ${
+        body?.builtInMemory ?? product.builtInMemory
+      } ГБ ${body?.color ?? product.color} ( ${
+        body?.ramSize ?? product.ramSize
+      } ГБ, ${body?.countSimCards ?? product.countSimCards} SIM, ${
+        body?.screenResolution ?? product.screenResolution
+      }, камера ${body?.backCameraMp ?? product.backCameraMp} Мп, ${
+        body?.batteryCapacity ?? product.batteryCapacity
+      } мА*ч)`;
+
+      product.name = name;
+      product.model = body?.model ?? product.model;
+      product.manufacturer = body?.manufacturer ?? product.manufacturer;
+      product.price = body?.price ?? product.price;
+      product.guaranteeInMonths =
+        body?.guaranteeInMonths ?? product.guaranteeInMonths;
+      product.release = body?.release ?? product.release;
+      product.supportESim = body?.supportESim ?? product.supportESim;
+      product.support3G = body?.support3G ?? product.support3G;
+      product.supportLte = body?.supportLte ?? product.supportLte;
+      product.support5G = body?.support5G ?? product.support5G;
+      product.formatSim = body?.formatSim ?? product.formatSim;
+      product.countSimCards = body?.countSimCards ?? product.countSimCards;
+      product.displayInInch = body?.displayInInch ?? product.displayInInch;
+      product.screenResolution =
+        body?.screenResolution ?? product.screenResolution;
+      product.aspectRadio = body?.aspectRadio ?? product.aspectRadio;
+      product.countColorIsDisplay =
+        body?.countColorIsDisplay ?? product.countColorIsDisplay;
+      product.updateFrequency =
+        body?.updateFrequency ?? product.updateFrequency;
+      product.materialType = body?.materialType ?? product.materialType;
+      product.osVersion = body?.osVersion ?? product.osVersion;
+      product.supportGoogleMobileService =
+        body?.supportGoogleMobileService ?? product.supportGoogleMobileService;
+      product.manufacturerCPU =
+        body?.manufacturerCPU ?? product.manufacturerCPU;
+      product.modelCPU = body?.modelCPU ?? product.modelCPU;
+      product.countCores = body?.countCores ?? product.countCores;
+      product.frequencyCPU = body?.frequencyCPU ?? product.frequencyCPU;
+      product.ramSize = body?.ramSize ?? product.ramSize;
+      product.builtInMemory = body?.builtInMemory ?? product.builtInMemory;
+      product.backCameraMp = body?.backCameraMp ?? product.backCameraMp;
+      product.frontCameraMp = body?.frontCameraMp ?? product.frontCameraMp;
+      product.versionBluetooth =
+        body?.versionBluetooth ?? product.versionBluetooth;
+      product.standardWiFi = body?.standardWiFi ?? product.standardWiFi;
+      product.NFC = body?.NFC ?? product.NFC;
+      product.cableInterface = body?.cableInterface ?? product.cableInterface;
+      product.batteryCapacity =
+        body?.batteryCapacity ?? product.batteryCapacity;
+      product.supportQuickCharger =
+        body?.supportQuickCharger ?? product.supportQuickCharger;
+      product.supportWirelessCharger =
+        body?.supportWirelessCharger ?? product.supportWirelessCharger;
+      product.width = body?.width ?? product.width;
+      product.height = body?.height ?? product.height;
+      product.thickness = body?.thickness ?? product.thickness;
+      product.weight = body?.weight ?? product.weight;
+      product.color = body?.color ?? product.color;
+
+      await product.save();
+
+      return res.status(200).json(product);
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({
+        message: "Возникла ошибка",
+        description: "При редактировании этого продукта возникла ошибка",
+      });
+    }
+  }
 }
 
 module.exports = new products();
