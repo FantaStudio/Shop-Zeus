@@ -15,7 +15,7 @@ const BlockRelease = view(() => {
             if (checked) {
               products.params.releases = [...products.params.releases, item];
             } else {
-              products.params.releases = products.params.v.filter(
+              products.params.releases = products.params.releases.filter(
                 (m) => m !== item
               );
             }

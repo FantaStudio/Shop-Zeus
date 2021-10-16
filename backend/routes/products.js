@@ -37,11 +37,7 @@ router.get(
   controller.fetchProductsByAdmin
 );
 
-router.get(
-  "/api/v1/admin/products/:productId",
-  roleMiddleware(["Admin"]),
-  controller.fetchProductById
-);
+router.get("/api/v1/products/:productId", controller.fetchProductById);
 
 router.patch(
   `/api/v1/admin/products/:productId`,
@@ -60,5 +56,7 @@ router.post(
   [roleMiddleware(["Admin"]), upload.any()],
   controller.replaceImage
 );
+
+router.get(`/api/v1/products`, controller.fetchProductsByClient);
 
 module.exports = router;

@@ -10,7 +10,7 @@ const BlockBuiltInMemory = view(() => {
       <div key={item}>
         <CustomCheckboxLabel
           checked={products.params.builtInMemory.includes(item)}
-          label={item}
+          label={`${item} Гб`}
           onChange={(e, checked) => {
             if (checked) {
               products.params.builtInMemory = [
@@ -18,9 +18,8 @@ const BlockBuiltInMemory = view(() => {
                 item,
               ];
             } else {
-              products.params.builtInMemory = products.params.v.filter(
-                (m) => m !== item
-              );
+              products.params.builtInMemory =
+                products.params.builtInMemory.filter((m) => m !== item);
             }
           }}
         />

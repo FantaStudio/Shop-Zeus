@@ -20,21 +20,6 @@ const useStyles = makeStyles({
   },
 });
 
-const optionsHaveInMarket = [
-  {
-    label: "В наличие",
-    value: "inStock",
-  },
-  {
-    label: "В наличие и под заказ",
-    value: "inStockAndUnderOrder",
-  },
-  {
-    label: "Все товары включая отсутствующие в продаже",
-    value: "",
-  },
-];
-
 const optionsHaveNFC = [
   {
     label: "Все",
@@ -52,8 +37,9 @@ const optionsHaveNFC = [
 
 const WatchChangeFilters = view(() => {
   const {
+    page,
+    perPage,
     search,
-    haveInMarket,
     manufacturers,
     fromPrice,
     toPrice,
@@ -69,23 +55,27 @@ const WatchChangeFilters = view(() => {
   const debouncedToPrice = useDebounce(toPrice, 500);
 
   useEffect(() => {
-    console.log(
+    const makeParams = {
+      page,
+      perPage,
       search,
-      haveInMarket,
-      manufacturers,
-      debouncedFromPrice,
-      debouncedToPrice,
-      releases,
-      builtInMemory,
-      ramSize,
+      manufacturers: manufacturers.join(","),
+      fromPrice: debouncedFromPrice,
+      toPrice: debouncedToPrice,
+      releases: releases.join(","),
+      builtInMemory: builtInMemory.join(","),
+      ramSize: ramSize.join(","),
       haveNfc,
       sortBy,
-      sortDirection
-    );
+      sortDirection,
+    };
+
+    products.fetchProducts(makeParams);
   }, [
+    page,
+    perPage,
     debouncedFromPrice,
     debouncedToPrice,
-    haveInMarket,
     manufacturers,
     search,
     releases,
@@ -116,16 +106,6 @@ const Filters = view(() => {
           defaultValue={products.params.search}
           onSearch={onSearch}
         />
-
-        <CollapsingBlock title="Наличие в магазинах">
-          <div>
-            <CustomRadioButtons
-              value={products.params.haveInMarket || ""}
-              onChange={(e, value) => (products.params.haveInMarket = value)}
-              items={optionsHaveInMarket}
-            />
-          </div>
-        </CollapsingBlock>
 
         <CollapsingBlock title="Цена">
           <BlockPrice />

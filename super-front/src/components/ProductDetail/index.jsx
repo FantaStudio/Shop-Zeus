@@ -1,6 +1,7 @@
+import { LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { view } from "@risingstack/react-easy-state";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import products from "../../store/products"; /* repeat(auto-fill, minmax(500px, 1fr)) */
 import ZeusButton from "../System/ZeusButton";
@@ -82,14 +83,24 @@ const ProductDetail = view(() => {
   const match = useRouteMatch();
   const history = useHistory();
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState(null);
 
-  useEffect(() => {
-    const findItem =
-      products.items.find((item) => item?.id === +match?.params?.id) || null;
+  const fetchProduct = useCallback(async () => {
+    setLoading(true);
 
-    setProduct(findItem);
+    const result = await products.fetchProduct(match?.params?.id);
+
+    if (result) {
+      setProduct(result);
+    }
+
+    setLoading(false);
   }, [match?.params?.id]);
+
+  useEffect(() => {
+    fetchProduct();
+  }, [fetchProduct]);
 
   const inInsideBasket = auth.productsInBasket.some(
     (item) => item?.id === product?.id
@@ -102,8 +113,14 @@ const ProductDetail = view(() => {
       </h1>
 
       <div className={classes.contentMain}>
+        {loading && <LinearProgress />}
+
         <div>
-          <img className={classes.contentMainImage} src={product?.imageHref} />
+          <img
+            className={classes.contentMainImage}
+            alt=""
+            src={product?.imageHref}
+          />
         </div>
 
         <div className={classes.blockData}>

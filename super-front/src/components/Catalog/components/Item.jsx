@@ -63,13 +63,13 @@ const Item = view(({ showType, phone }) => {
   const history = useHistory();
 
   const inInsideBasket = auth.productsInBasket.some(
-    (item) => item?.id === phone?.id
+    (item) => item?._id === phone?._id
   );
 
   return (
     <div className={showType === "Grid" ? classes.gridMode : classes.root}>
       <div>
-        <img src={phone?.imageHref} className={classes.image} />
+        <img src={phone?.imageHref} alt="" className={classes.image} />
       </div>
       <div
         className={
@@ -78,7 +78,7 @@ const Item = view(({ showType, phone }) => {
       >
         <p style={showType === "Grid" ? { margin: 3 } : {}}>
           <Link
-            to={`/phone/${phone?.id}`}
+            to={`/phone/${phone?._id}`}
             style={{ color: secondaryThemeColor }}
           >
             {phone?.name}

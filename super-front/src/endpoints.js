@@ -12,8 +12,9 @@ export const endpoints = {
   products: {
     createProduct: `${url_backend}/v1/admin/products`,
     fetchProductsByAdmin: `${url_backend}/v1/admin/products`,
-    fetchProductByAdmin: `${url_backend}/v1/admin/products/{productId}`,
+    fetchProduct: `${url_backend}/v1/products/{productId}`,
     changeProductByAdmin: `${url_backend}/v1/admin/products/{productId}`,
     replaceImageByAdmin: `${url_backend}/v1/admin/products/replace-image/{productId}`,
+    fetchProducts: `${url_backend}/v1/products`,
   },
 };

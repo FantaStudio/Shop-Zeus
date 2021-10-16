@@ -1,4 +1,7 @@
+import { LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Pagination } from "@material-ui/lab";
+import { view } from "@risingstack/react-easy-state";
 import React, { useEffect, useState } from "react";
 import products from "../../store/products";
 import Item from "./components/Item";
@@ -29,7 +32,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Catalog = () => {
+const Catalog = view(() => {
   const classes = useStyles();
   const [showType, setShowType] = useState("Row");
 
@@ -41,9 +44,13 @@ const Catalog = () => {
     }
   }, []);
 
-  const mapFakeOptions = products.items.map((phone) => {
-    return <Item key={phone.id} showType={showType} phone={phone} />;
+  const mapOptions = products.items.map((phone) => {
+    return <Item key={phone._id} showType={showType} phone={phone} />;
   });
+
+  const onChangePagination = (e, page) => {
+    products.params.page = page;
+  };
 
   return (
     <div className={classes.root}>
@@ -54,12 +61,33 @@ const Catalog = () => {
       <div className={classes.content}>
         <Filters />
 
-        <div className={showType === "Grid" ? classes.gridPhones : null}>
-          {mapFakeOptions}
+        <div>
+          {products.loading && <LinearProgress />}
+
+          <div className={showType === "Grid" ? classes.gridPhones : null}>
+            {mapOptions}
+          </div>
+
+          {products?.pages > 1 && (
+            <div
+              style={{
+                flex: 1,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Pagination
+                count={products.pages}
+                page={products.params.page}
+                onChange={onChangePagination}
+                size="large"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
-};
+});
 
 export default Catalog;

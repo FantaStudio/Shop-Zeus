@@ -10,12 +10,12 @@ const BlockRamSize = view(() => {
       <div key={item}>
         <CustomCheckboxLabel
           checked={products.params.ramSize.includes(item)}
-          label={item}
+          label={`${item} Гб`}
           onChange={(e, checked) => {
             if (checked) {
               products.params.ramSize = [...products.params.ramSize, item];
             } else {
-              products.params.ramSize = products.params.v.filter(
+              products.params.ramSize = products.params.ramSize.filter(
                 (m) => m !== item
               );
             }

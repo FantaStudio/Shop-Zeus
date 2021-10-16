@@ -42,7 +42,7 @@ const DetailInformation = () => {
   const fetchDetail = useCallback(async () => {
     setLoading(true);
 
-    const result = await products.fetchProductByAdmin(id);
+    const result = await products.fetchProduct(id);
 
     if (result) {
       setDetail(result);

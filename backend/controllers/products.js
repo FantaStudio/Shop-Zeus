@@ -320,6 +320,160 @@ class products {
       });
     }
   }
+
+  async fetchProductsByClient(req, res) {
+    try {
+      const {
+        page,
+        perPage,
+        search,
+        ramSize,
+        manufacturers,
+        releases,
+        builtInMemory,
+        haveNfc,
+        fromPrice,
+        toPrice,
+        sortBy,
+        sortDirection,
+      } = req.query || {};
+
+      let paramsSearch = {};
+
+      if (search) {
+        paramsSearch = {
+          $text: {
+            $search: search,
+            $caseSensitive: false,
+          },
+        };
+      }
+
+      let paramsRamSize = {};
+
+      if (ramSize) {
+        paramsRamSize = {
+          ramSize: { $in: [...ramSize.split(",")] },
+        };
+      }
+
+      let paramsManufacturers = {};
+
+      if (manufacturers) {
+        paramsManufacturers = {
+          manufacturer: { $in: [...manufacturers.split(",")] },
+        };
+      }
+
+      let paramsReleases = {};
+
+      if (releases) {
+        paramsReleases = {
+          release: { $in: [...releases.split(",")] },
+        };
+      }
+
+      let paramsBuiltInMemory = {};
+
+      if (builtInMemory) {
+        paramsBuiltInMemory = {
+          builtInMemory: { $in: [...builtInMemory.split(",")] },
+        };
+      }
+
+      let paramsHaveNfc = {};
+
+      if (haveNfc !== undefined) {
+        if (haveNfc === "Yes") {
+          paramsHaveNfc = {
+            NFC: true,
+          };
+        }
+        if (haveNfc === "No") {
+          paramsHaveNfc = {
+            NFC: false,
+          };
+        }
+      }
+
+      let paramsPriceFilter = {};
+
+      if (
+        fromPrice !== "" &&
+        fromPrice !== undefined &&
+        toPrice !== "" &&
+        toPrice !== undefined
+      ) {
+        paramsPriceFilter = {
+          price: { $gte: fromPrice, $lte: toPrice },
+        };
+      } else if (
+        fromPrice !== "" &&
+        fromPrice !== undefined &&
+        (toPrice === "" || toPrice === undefined)
+      ) {
+        paramsPriceFilter = {
+          price: { $gte: fromPrice },
+        };
+      } else if (
+        (fromPrice === "" || fromPrice === undefined) &&
+        toPrice !== "" &&
+        toPrice !== undefined
+      ) {
+        paramsPriceFilter = {
+          price: { $lte: toPrice },
+        };
+      }
+
+      let sortParams = {};
+
+      if (sortBy === "price") {
+        if (sortDirection !== undefined) {
+          sortParams = {
+            price: sortDirection === "asc" ? 1 : -1,
+          };
+        }
+      }
+
+      if (sortBy === "name") {
+        if (sortDirection !== undefined) {
+          sortParams = {
+            name: sortDirection === "asc" ? 1 : -1,
+          };
+        }
+      }
+
+      await Product.paginate(
+        {
+          $and: [
+            paramsSearch,
+            paramsRamSize,
+            paramsManufacturers,
+            paramsReleases,
+            paramsBuiltInMemory,
+            paramsHaveNfc,
+            paramsPriceFilter,
+          ],
+        },
+        {
+          page: page || 1,
+          limit: perPage || 15,
+          customLabels: myCustomLabels,
+          sort: sortParams,
+        },
+        function (err, result) {
+          return res.json(result);
+        }
+      );
+    } catch (err) {
+      console.log(err);
+
+      return res.status(400).json({
+        message: "Возникла ошибка",
+        description: "При запросе всех продуктов сайта возникла проблема",
+      });
+    }
+  }
 }
 
 module.exports = new products();
