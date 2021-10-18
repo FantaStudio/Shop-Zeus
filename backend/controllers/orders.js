@@ -49,8 +49,6 @@ class orders {
     try {
       const myOrders = await Order.find({ userId: req?.user?.id });
 
-      console.log(myOrders);
-
       let arr = [];
 
       for (const order of myOrders) {
