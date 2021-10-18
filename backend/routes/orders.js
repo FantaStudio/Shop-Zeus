@@ -4,6 +4,7 @@ const { check } = require("express-validator");
 const router = new Router();
 
 const authMiddleware = require("../middleware/auth");
+const roleMiddleware = require("../middleware/role");
 
 router.post(
   "/api/v1/orders",
@@ -18,5 +19,11 @@ router.post(
 );
 
 router.get("/api/v1/orders", authMiddleware, controller.fetchOrders);
+
+router.get(
+  "/api/v1/admin/orders",
+  roleMiddleware(["Admin"]),
+  controller.fetchOrdersByAdmin
+);
 
 module.exports = router;

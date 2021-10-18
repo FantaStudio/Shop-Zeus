@@ -20,5 +20,6 @@ export const endpoints = {
   orders: {
     fetchOrders: `${url_backend}/v1/orders`,
     createOrder: `${url_backend}/v1/orders`,
+    fetchOrderByAdmin: `${url_backend}/v1/admin/orders`,
   },
 };

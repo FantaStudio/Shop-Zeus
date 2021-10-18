@@ -14,6 +14,17 @@ const orders = store({
     }
   },
 
+  async fetchOrdersByAdmin(params = {}) {
+    try {
+      const { data } = await get(endpoints.orders.fetchOrderByAdmin, params);
+
+      return data;
+    } catch (err) {
+      showError(err);
+      return false;
+    }
+  },
+
   async createOrder(payload) {
     try {
       const { data } = await post(endpoints.orders.createOrder, payload);

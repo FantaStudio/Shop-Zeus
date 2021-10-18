@@ -10,6 +10,12 @@ const Order = new Schema({
   execute: { type: Boolean, default: false },
 });
 
+Order.index({
+  address: "text",
+  city: "text",
+  postalCode: "text",
+});
+
 Order.plugin(mongoosePaginate);
 
 module.exports = model("Order", Order);

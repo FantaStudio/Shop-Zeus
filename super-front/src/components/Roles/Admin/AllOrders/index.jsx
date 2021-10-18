@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Check, Warning } from "@material-ui/icons";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import orders from "../../../../store/orders";
 import SearchField from "../../../System/SearchField";
 import ZeusTable from "./../../../System/ZeusTable";
 
@@ -49,7 +50,7 @@ const AllOrders = () => {
 
   const params = useRef({
     page: 1,
-    perPage: 15,
+    perPage: 10,
   });
 
   const fetcher = useCallback(async (newParams) => {
@@ -60,42 +61,7 @@ const AllOrders = () => {
       ...newParams,
     };
 
-    const result = await {
-      data: [
-        {
-          clientName: "Вася Пупкин",
-          product: "Супер телефон",
-          productId: "e2d2fwr23d2d",
-          orderId: 124124151,
-          address: "аыаыва",
-          city: "вфывфпы",
-          postalCode: 441251,
-          execute: true,
-        },
-        {
-          clientName: "Вася Пупкин",
-          product: "Супер телефон",
-          productId: "e2d2fwr23d2d",
-          orderId: 124124151,
-          address: "аыаыва",
-          city: "вфывфпы",
-          postalCode: 441251,
-          execute: false,
-        },
-
-        {
-          clientName: "Вася Пупкин",
-          product: "Супер телефон",
-          productId: "e2d2fwr23d2d",
-          orderId: 124124151,
-          address: "аыаыва",
-          city: "вфывфпы",
-          postalCode: 441251,
-          execute: true,
-        },
-      ],
-      pages: 1,
-    };
+    const result = await orders.fetchOrdersByAdmin(params.current);
 
     if (result) {
       setItems(result?.data);
@@ -116,14 +82,20 @@ const AllOrders = () => {
         },
       },
       {
-        Header: "Продукт",
+        Header: "Продукты",
         disableSortBy: true,
         accessor: (rowData) => {
-          return (
-            <Link to={`/admin/all-products/${rowData?.productId}`}>
-              {rowData?.product}
-            </Link>
-          );
+          const mapProducts = rowData?.products?.map((item) => {
+            return (
+              <div key={item?.productId} style={{ marginBottom: ".5rem" }}>
+                <Link to={`/admin/all-products/${item?.productId}`}>
+                  {item?.name}
+                </Link>
+              </div>
+            );
+          });
+
+          return mapProducts;
         },
       },
       {
