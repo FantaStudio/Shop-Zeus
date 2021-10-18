@@ -54,7 +54,7 @@ const UploadArea = memo(({ upload, subLabel, iconSize, loading, file }) => {
       >
         <div className={classes.center}>
           <div className={classes.image}>
-            <img src="/images/file-upload.svg" />
+            <img src="/images/file-upload.svg" alt="" />
           </div>{" "}
           {!loading && (
             <div className={classes.content}>
