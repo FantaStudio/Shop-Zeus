@@ -6,12 +6,13 @@ const router = new Router();
 const authMiddleware = require("../middleware/auth");
 
 router.post(
-  "/api/v1/orders/create",
+  "/api/v1/orders",
   [
+    check("address", "Адрес обязательное поле").notEmpty(),
+    check("city", "Город обязательное поле").notEmpty(),
+    check("postalCode", "Почтовый индекс обязательное поле").notEmpty(),
+    check("productId", "Не указан какой продукт заказывается").notEmpty(),
     authMiddleware,
-    check("email", "Почта пользователя обязательна").notEmpty(),
-    check("email", "Почта введена неправильно").isEmail(),
-    check("password", "Пароль пользователя обязателен").notEmpty(),
   ],
   controller.createOrder
 );

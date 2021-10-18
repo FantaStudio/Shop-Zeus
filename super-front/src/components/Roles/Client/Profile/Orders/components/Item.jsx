@@ -65,12 +65,12 @@ const Item = ({ phone }) => {
   return (
     <div className={classes.root}>
       <div>
-        <img src={phone?.imageHref} className={classes.image} />
+        <img src={phone?.imageHref} alt="" className={classes.image} />
       </div>
       <div className={classes.nameBlock}>
         <p>
           <Link
-            to={`/phone/${phone?.id}`}
+            to={`/phone/${phone?.productId}`}
             style={{ color: secondaryThemeColor }}
           >
             {phone?.name}

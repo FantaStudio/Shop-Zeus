@@ -2,37 +2,12 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
-const multer = require("multer");
 const uuid = require("uuid");
-
-const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/images");
-  },
-  filename: (req, file, cb) => {
-    const hex = uuid.v4();
-
-    cb(null, Date.now() + hex + path?.extname(file.originalname));
-  },
-});
-
-const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 const productsRoutes = require(`./routes/products`);
 const authRoutes = require(`./routes/auth`);
 const adminRoutes = require(`./routes/admin`);
+const ordersRoutes = require(`./routes/orders`);
 
 const PORT = process.env.PORT || 3000;
 
@@ -55,12 +30,7 @@ app.use("/static", express.static(path.join(__dirname, "public")));
 app.use(productsRoutes);
 app.use(authRoutes);
 app.use(adminRoutes);
-
-app.post("/upload", upload.single("image"), (req, res) => {
-  console.log(req.file?.filename);
-
-  res.json({});
-});
+app.use(ordersRoutes);
 
 const start = async () => {
   try {

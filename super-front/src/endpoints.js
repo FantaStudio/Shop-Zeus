@@ -17,4 +17,7 @@ export const endpoints = {
     replaceImageByAdmin: `${url_backend}/v1/admin/products/replace-image/{productId}`,
     fetchProducts: `${url_backend}/v1/products`,
   },
+  orders: {
+    fetchOrders: `${url_backend}/v1/orders`,
+  },
 };

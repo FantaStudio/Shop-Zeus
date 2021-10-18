@@ -1,5 +1,7 @@
+import { LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import orders from "../../../../../store/orders";
 import Item from "./components/Item";
 
 const useStyles = makeStyles({
@@ -17,36 +19,33 @@ const useStyles = makeStyles({
 
 const Orders = () => {
   const classes = useStyles();
-  const orders = [
-    {
-      id: 1,
-      name: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
-      price: 2000,
-      imageHref: "/images/phone.jpg",
-      execute: false,
-    },
-    {
-      id: 2,
-      name: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
-      price: 3000,
-      imageHref: "/images/phone.jpg",
-      execute: false,
-    },
-    {
-      id: 3,
-      name: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
-      price: 4000,
-      imageHref: "/images/phone.jpg",
-      execute: true,
-    },
-  ];
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
 
-  const mapsItems = orders.map((item) => {
-    return <Item key={item?.id} phone={item} />;
+  const fetcher = useCallback(async () => {
+    setLoading(true);
+
+    const result = await orders.fetchOrders();
+
+    if (result) {
+      setData(result);
+    }
+
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    fetcher();
+  }, [fetcher]);
+
+  const mapsItems = data.map((item) => {
+    return <Item key={item?.productId} phone={item} />;
   });
 
   return (
     <div className={classes.root}>
+      {loading && <LinearProgress />}
+
       <div className={classes.block}>{mapsItems}</div>
     </div>
   );
