@@ -2,7 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
-const uuid = require("uuid");
+const json2csv = require("json2csv");
+const { Parser } = require("json2csv");
 
 const productsRoutes = require(`./routes/products`);
 const authRoutes = require(`./routes/auth`);
@@ -23,6 +24,33 @@ app.use((req, res, next) => {
     "Content-Type, Authorization, Accept"
   );
   next();
+});
+
+app.get("/", (req, res) => {
+  const myCars = [
+    {
+      car: "Audi",
+      price: 40000,
+      color: "blue",
+    },
+    {
+      car: "BMW",
+      price: 35000,
+      color: "black",
+    },
+    {
+      car: "Porsche",
+      price: 60000,
+      color: "green",
+    },
+  ];
+
+  const json2csvParser = new Parser();
+  const csv = json2csvParser.parse(myCars);
+
+  res.send(Buffer.from(csv));
+
+  console.log(csv);
 });
 
 app.use("/static", express.static(path.join(__dirname, "public")));

@@ -25,6 +25,29 @@ const orders = store({
     }
   },
 
+  async fetchOrderByAdminCsv(params = {}) {
+    try {
+      const { data } = await get(
+        endpoints.orders.fetchOrderByAdminCsv,
+        params,
+        "blob",
+        { Accept: "text/csv; charset=utf-8" }
+      );
+
+      const blob = data;
+
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "all_orders.csv";
+
+      link.click();
+    } catch (err) {
+      console.log(err);
+      showError(err);
+      return false;
+    }
+  },
+
   async createOrder(payload) {
     try {
       const { data } = await post(endpoints.orders.createOrder, payload);

@@ -26,4 +26,10 @@ router.get(
   controller.fetchOrdersByAdmin
 );
 
+router.get(
+  "/api/v1/admin/orders/csv",
+  roleMiddleware(["Admin"]),
+  controller.fetchOrdersByAdminCsv
+);
+
 module.exports = router;

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { LinearProgress } from "@material-ui/core";
 import { green, orange } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
@@ -171,6 +172,14 @@ const AllOrders = () => {
     [fetcher]
   );
 
+  const downloadCsv = useCallback(async () => {
+    setLoading(true);
+
+    await orders.fetchOrderByAdminCsv(params.current);
+
+    setLoading(false);
+  }, []);
+
   return (
     <div className={classes.root}>
       <div className={classes.block}>
@@ -179,6 +188,9 @@ const AllOrders = () => {
           defaultValue={params?.current?.search}
           variant="standard"
         />
+        <div style={{ height: 15 }} />
+
+        <a onClick={downloadCsv}>Экспортировать текущую заказы в csv</a>
 
         <div style={{ height: 15 }} />
 
