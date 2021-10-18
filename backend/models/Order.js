@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 
 const Order = new Schema({
-  productId: { type: String, ref: `Product` },
+  productsIds: [{ type: String, ref: `Product` }],
   userId: { type: String, ref: `User` },
   address: { type: String, required: true },
   city: { type: String, required: true },

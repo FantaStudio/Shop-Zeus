@@ -19,6 +19,8 @@ const useStyles = makeStyles({
     height: "auto",
   },
   nameBlock: {
+    display: "flex",
+    alignItems: "center",
     marginLeft: "1rem",
     wordBreak: "break-word",
     maxWidth: 750,
@@ -59,48 +61,61 @@ const useStyles = makeStyles({
   },
 });
 
-const Item = ({ phone }) => {
+const Item = ({ order }) => {
   const classes = useStyles();
 
-  return (
-    <div className={classes.root}>
-      <div>
-        <img src={phone?.imageHref} alt="" className={classes.image} />
-      </div>
-      <div className={classes.nameBlock}>
-        <p>
-          <Link
-            to={`/phone/${phone?.productId}`}
-            style={{ color: secondaryThemeColor }}
-          >
-            {phone?.name}
-          </Link>{" "}
-        </p>
-      </div>
+  const mapPhones = (order?.products || [])?.map((phone) => {
+    return (
+      <div style={{ display: "flex", marginBottom: "1rem" }}>
+        <div key={phone?.productId}>
+          <img src={phone?.imageHref} alt="" className={classes.image} />
+        </div>
 
-      <div className={classes.priceBlock}>
-        <div>
-          <p className={classes.price}>
-            <b>{`₽ ${phone?.price}`}</b>
+        <div className={classes.nameBlock}>
+          <p>
+            <Link
+              to={`/phone/${phone?.productId}`}
+              style={{ color: secondaryThemeColor }}
+            >
+              {phone?.name}
+            </Link>{" "}
           </p>
         </div>
 
-        <div
-          style={{ display: "flex", alignItems: "center" }}
-          className={phone?.execute ? classes.done : classes.notDone}
-        >
-          {phone?.execute ? (
-            <>
-              <Check className={classes.iconExecute} />
-              <span className={classes.text}>Доставлено</span>
-            </>
-          ) : (
-            <>
-              <Warning className={classes.iconExecute} />
-              <span className={classes.text}>Доставляется...</span>
-            </>
-          )}
+        <div className={classes.priceBlock}>
+          <div>
+            <p className={classes.price}>
+              <b>{`₽ ${phone?.price}`}</b>
+            </p>
+          </div>
         </div>
+      </div>
+    );
+  });
+
+  return (
+    <div className={classes.root}>
+      <div style={{ marginRight: "1.5rem" }}>{mapPhones}</div>
+
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        className={order?.execute ? classes.done : classes.notDone}
+      >
+        {order?.execute ? (
+          <>
+            <Check className={classes.iconExecute} />
+            <span className={classes.text}>Доставлено</span>
+          </>
+        ) : (
+          <>
+            <Warning className={classes.iconExecute} />
+            <span className={classes.text}>Доставляется...</span>
+          </>
+        )}
       </div>
     </div>
   );

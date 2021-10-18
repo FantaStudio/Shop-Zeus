@@ -4,6 +4,7 @@ import { view } from "@risingstack/react-easy-state";
 import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import orders from "../../../../store/orders";
 import MyTextField from "../../../System/FormComponents/MyTextField";
 import { useRequireAuth } from "./../../../../hooks/useRequireAuth";
 import auth from "./../../../../store/auth";
@@ -57,18 +58,25 @@ const Checkout = view(() => {
   const classes = useStyles();
 
   const confirm = useCallback(
-    (values) => {
+    async (values) => {
       setLoading(true);
 
       console.log(values);
 
-      setTimeout(() => {
-        setLoading(false);
+      const mapProductsIds = auth.productsInBasket?.map((item) => item?._id);
 
+      const result = await orders.createOrder({
+        ...values,
+        productsIds: mapProductsIds,
+      });
+
+      if (result) {
         history.replace("/");
 
         ui.openSuccessOrderDialog = true;
-      }, 1000);
+      }
+
+      setLoading(false);
     },
     [history]
   );

@@ -14,11 +14,13 @@ class orders {
         });
       }
 
-      const { address, city, postalCode, productId } = req.body;
+      const { address, city, postalCode, productsIds } = req.body;
 
-      const findProduct = await Product.findById(productId);
+      const findProducts = await Product.find({
+        productsIds: { $in: productsIds },
+      });
 
-      if (!findProduct) {
+      if (!findProducts) {
         return res.status(400).json({
           message: "Возникла ошибка",
           description: "Такой продукт не найден",
@@ -29,7 +31,7 @@ class orders {
         address,
         city,
         postalCode,
-        productId,
+        productsIds,
         userId: req?.user?.id,
       });
 
@@ -52,16 +54,24 @@ class orders {
       let arr = [];
 
       for (const order of myOrders) {
-        const product = await Product.findById(order?.productId);
+        const products = await Product.find({
+          _id: { $in: order?.productsIds },
+        });
+
+        const shortProducts = products.map((item) => {
+          return {
+            productId: item._id,
+            name: item.name,
+            imageHref: item.imageHref,
+            price: item.price,
+          };
+        });
 
         arr = [
           ...arr,
           {
             orderId: order._id,
-            productId: product._id,
-            name: product.name,
-            price: product.price,
-            imageHref: product.imageHref,
+            products: shortProducts,
             execute: order.execute,
           },
         ];
