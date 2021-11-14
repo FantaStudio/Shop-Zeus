@@ -24,7 +24,7 @@
     "react-table": "^7.7.0"
   },
   "scripts": {
-    "start": "set PORT=8000 && react-scripts start",
+    "start": "export PORT=8000 && react-scripts start",
     "build": "react-scripts build"
   },
   "eslintConfig": {

@@ -1,10 +1,13 @@
-import { FormHelperText, IconButton } from "@material-ui/core";
+import { DialogActions, FormHelperText, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { secondaryThemeColor } from "../../../helpers/colors";
+import auth from "../../../store/auth";
+import Alert from "../../System/Alert";
+import CustomCheckboxLabel from "../../System/CustomCheckboxLabel";
 import MyTextField from "../../System/FormComponents/MyTextField";
 import { is } from "./../../../helpers/is";
 import ZeusButton from "./../../System/ZeusButton";
@@ -48,6 +51,9 @@ export const passwordRegexp = new RegExp(
 
 const Registration = () => {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
+  const [accept, setAccept] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmationPassword, setShowConfirmationPassword] =
     useState(false);
@@ -66,14 +72,22 @@ const Registration = () => {
 
   const { setError } = form;
 
-  const confirm = useCallback((values) => {
+  const confirm = useCallback(async (values) => {
+    setLoading(true);
+
     const payload = { ...values };
 
     if (payload.confirmationPassword) {
       delete payload.confirmationPassword;
     }
 
-    console.log(values);
+    const result = await auth.register(payload);
+
+    if (result) {
+      setOpenConfirm(true);
+    }
+
+    setLoading(false);
   }, []);
 
   const password = useWatch({
@@ -95,83 +109,144 @@ const Registration = () => {
   }, [confirmationPassword, password, setError]);
 
   return (
-    <div className={classes.root}>
-      <h1>Регистрация</h1>
+    <>
+      <div className={classes.root}>
+        <h1>Регистрация</h1>
 
-      <div className={classes.block}>
-        <div className={classes.blockInputs}>
-          <MyTextField
-            control={form.control}
-            name="name"
-            label="Имя"
-            rules={{ required: true, maxLength: 30 }}
-            fullWidth
-          />
-
-          {form.formState.errors?.name?.type === "required" && (
-            <FormHelperText error>Поле обязательное</FormHelperText>
-          )}
-
-          {form.formState.errors?.name?.type === "maxLength" && (
-            <FormHelperText error>
-              Поле должно быть не больше 30 символов
-            </FormHelperText>
-          )}
-
-          <div style={{ height: 15 }} />
-
-          <MyTextField
-            control={form.control}
-            name="email"
-            label="Почта"
-            rules={{
-              required: true,
-              validate: {
-                valid: (value) => {
-                  if (!value) {
-                    return true;
-                  }
-
-                  if (value && value?.includes("@")) {
-                    return true;
-                  }
-
-                  return false;
-                },
-              },
-            }}
-            fullWidth
-          />
-
-          {form.formState.errors?.email?.type === "required" && (
-            <FormHelperText error>Поле обязательное</FormHelperText>
-          )}
-
-          {form.formState.errors?.email?.type === "valid" && (
-            <FormHelperText error>Почта не валидна</FormHelperText>
-          )}
-
-          <div style={{ height: 15 }} />
-
-          <div style={{ position: "relative" }}>
+        <div className={classes.block}>
+          <div className={classes.blockInputs}>
             <MyTextField
               control={form.control}
-              name="password"
-              type={showPassword ? "text" : "password"}
-              label="Пароль"
+              name="name"
+              label="Имя"
+              rules={{ required: true, maxLength: 30 }}
+              fullWidth
+            />
+
+            {form.formState.errors?.name?.type === "required" && (
+              <FormHelperText error>Поле обязательное</FormHelperText>
+            )}
+
+            {form.formState.errors?.name?.type === "maxLength" && (
+              <FormHelperText error>
+                Поле должно быть не больше 30 символов
+              </FormHelperText>
+            )}
+
+            <div style={{ height: 15 }} />
+
+            <MyTextField
+              control={form.control}
+              name="email"
+              label="Почта"
+              rules={{
+                required: true,
+                validate: {
+                  valid: (value) => {
+                    if (!value) {
+                      return true;
+                    }
+
+                    if (value && value?.includes("@")) {
+                      return true;
+                    }
+
+                    return false;
+                  },
+                },
+              }}
+              fullWidth
+            />
+
+            {form.formState.errors?.email?.type === "required" && (
+              <FormHelperText error>Поле обязательное</FormHelperText>
+            )}
+
+            {form.formState.errors?.email?.type === "valid" && (
+              <FormHelperText error>Почта не валидна</FormHelperText>
+            )}
+
+            <div style={{ height: 15 }} />
+
+            <div style={{ position: "relative" }}>
+              <MyTextField
+                control={form.control}
+                name="password"
+                type={showPassword ? "text" : "password"}
+                label="Пароль"
+                endAdornment={
+                  <>
+                    {showPassword ? (
+                      <IconButton
+                        style={{ padding: 0 }}
+                        onClick={() => setShowPassword(false)}
+                      >
+                        <VisibilityOff />
+                      </IconButton>
+                    ) : (
+                      <IconButton
+                        style={{ padding: 0 }}
+                        onClick={() => setShowPassword(true)}
+                      >
+                        <Visibility />
+                      </IconButton>
+                    )}
+                  </>
+                }
+                rules={{
+                  required: true,
+                  validate: {
+                    valid: (value) => {
+                      if (!value) {
+                        return true;
+                      }
+
+                      if (value && passwordRegexp.test(value)) {
+                        return true;
+                      }
+
+                      return false;
+                    },
+                  },
+                }}
+                fullWidth
+              />
+
+              {form.formState.errors?.password?.type === "required" && (
+                <FormHelperText error>Поле обязательное</FormHelperText>
+              )}
+
+              {form.formState.errors?.password?.type === "valid" && (
+                <FormHelperText error>Пароль не валиден</FormHelperText>
+              )}
+
+              <WrapValidatePassword
+                control={form?.control}
+                name="password"
+                errors={form?.formState?.errors}
+              />
+            </div>
+
+            <div style={{ height: 15 }} />
+
+            <MyTextField
+              control={form.control}
+              name="confirmationPassword"
+              type={showConfirmationPassword ? "text" : "password"}
+              label="Подтвердить пароль"
               endAdornment={
                 <>
-                  {showPassword ? (
+                  {showConfirmationPassword ? (
                     <IconButton
                       style={{ padding: 0 }}
-                      onClick={() => setShowPassword(false)}
+                      onClick={() => setShowConfirmationPassword(false)}
                     >
                       <VisibilityOff />
                     </IconButton>
                   ) : (
                     <IconButton
                       style={{ padding: 0 }}
-                      onClick={() => setShowPassword(true)}
+                      onClick={() => setShowConfirmationPassword(true)}
                     >
                       <Visibility />
                     </IconButton>
@@ -186,7 +261,7 @@ const Registration = () => {
                       return true;
                     }
 
-                    if (value && passwordRegexp.test(value)) {
+                    if (value && is(String, value) && value === password) {
                       return true;
                     }
 
@@ -197,101 +272,82 @@ const Registration = () => {
               fullWidth
             />
 
-            {form.formState.errors?.password?.type === "required" && (
+            {form.formState.errors?.confirmationPassword?.type ===
+              "required" && (
               <FormHelperText error>Поле обязательное</FormHelperText>
             )}
 
-            {form.formState.errors?.password?.type === "valid" && (
-              <FormHelperText error>Пароль не валиден</FormHelperText>
+            {form.formState.errors?.confirmationPassword?.type === "valid" && (
+              <FormHelperText error>Пароли не совпадают</FormHelperText>
             )}
 
-            <WrapValidatePassword
-              control={form?.control}
-              name="password"
-              errors={form?.formState?.errors}
+            <div style={{ height: 15 }} />
+
+            <MyTextField
+              control={form.control}
+              name="phone"
+              label="Телефон"
+              rules={{ required: true }}
+              placeholder="+79172347618"
+              fullWidth
+            />
+
+            {form.formState.errors?.phone?.type === "required" && (
+              <FormHelperText error>Поле обязательное</FormHelperText>
+            )}
+
+            <div style={{ height: 15 }} />
+
+            <CustomCheckboxLabel
+              checked={accept}
+              label="Я даю согласию на обработку персональных данных"
+              onChange={(e, checked) => {
+                setAccept(checked);
+              }}
             />
           </div>
 
-          <div style={{ height: 15 }} />
+          <div className={classes.actions}>
+            <ZeusButton
+              loading={loading}
+              disabled={!accept}
+              onClick={form.handleSubmit(confirm)}
+            >
+              Зарегистрироваться
+            </ZeusButton>
 
-          <MyTextField
-            control={form.control}
-            name="confirmationPassword"
-            type={showConfirmationPassword ? "text" : "password"}
-            label="Подтвердить пароль"
-            endAdornment={
-              <>
-                {showPassword ? (
-                  <IconButton
-                    style={{ padding: 0 }}
-                    onClick={() => setShowConfirmationPassword(false)}
-                  >
-                    <VisibilityOff />
-                  </IconButton>
-                ) : (
-                  <IconButton
-                    style={{ padding: 0 }}
-                    onClick={() => setShowConfirmationPassword(true)}
-                  >
-                    <Visibility />
-                  </IconButton>
-                )}
-              </>
-            }
-            rules={{
-              required: true,
-              validate: {
-                valid: (value) => {
-                  if (!value) {
-                    return true;
-                  }
-
-                  if (value && is(String, value) && value === password) {
-                    return true;
-                  }
-
-                  return false;
-                },
-              },
-            }}
-            fullWidth
-          />
-
-          {form.formState.errors?.confirmationPassword?.type === "required" && (
-            <FormHelperText error>Поле обязательное</FormHelperText>
-          )}
-
-          {form.formState.errors?.confirmationPassword?.type === "valid" && (
-            <FormHelperText error>Пароли не совпадают</FormHelperText>
-          )}
-
-          <div style={{ height: 15 }} />
-
-          <MyTextField
-            control={form.control}
-            name="phone"
-            label="Телефон"
-            rules={{ required: true }}
-            placeholder="+79172347618"
-            fullWidth
-          />
-
-          {form.formState.errors?.phone?.type === "required" && (
-            <FormHelperText error>Поле обязательное</FormHelperText>
-          )}
-        </div>
-
-        <div className={classes.actions}>
-          <ZeusButton onClick={form.handleSubmit(confirm)}>
-            Зарегистрироваться
-          </ZeusButton>
-
-          <Link to="/login" className={classes.link}>
-            Уже есть аккаунт? Войти
-          </Link>
+            <Link to="/login" className={classes.link}>
+              Уже есть аккаунт? Войти
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+
+      <Alert
+        open={openConfirm}
+        setOpen={setOpenConfirm}
+        customTitle="Регистрация прошла успешно"
+        content={
+          <>
+            <p>
+              Вам на e-mail было отправлено письмо для подтверждения
+              регистрации.
+            </p>
+
+            <DialogActions>
+              <ZeusButton
+                onClick={() => {
+                  setOpenConfirm(false);
+                  form.reset({});
+                }}
+              >
+                Хорошо
+              </ZeusButton>
+            </DialogActions>
+          </>
+        }
+      />
+    </>
   );
 };
 

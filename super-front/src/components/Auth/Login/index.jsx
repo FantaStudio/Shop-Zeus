@@ -104,7 +104,6 @@ const Login = () => {
       const result = await auth.login(values?.email, values?.password);
 
       if (result) {
-        console.log(result);
         redirects(result?.roles, history, location);
       }
 

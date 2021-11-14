@@ -49,6 +49,17 @@ const auth = store({
       return false;
     }
   },
+
+  async register(payload) {
+    try {
+      await post(endpoints.auth.register, payload);
+
+      return true;
+    } catch (err) {
+      showError(err);
+      return false;
+    }
+  },
 });
 
 export default auth;
