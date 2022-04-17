@@ -190,7 +190,7 @@ const AllOrders = () => {
         />
         <div style={{ height: 15 }} />
 
-        <a onClick={downloadCsv}>Экспортировать текущую заказы в csv</a>
+        <a onClick={downloadCsv}>Экспортировать текущие заказы в csv</a>
 
         <div style={{ height: 15 }} />
 
