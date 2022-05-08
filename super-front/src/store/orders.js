@@ -1,6 +1,6 @@
 import { store } from "@risingstack/react-easy-state";
 import { endpoints } from "../endpoints";
-import { get, post, showError } from "./../api/index";
+import { get, patch, post, showError } from "./../api/index";
 
 const orders = store({
   async fetchOrders() {
@@ -53,6 +53,17 @@ const orders = store({
       const { data } = await post(endpoints.orders.createOrder, payload);
 
       return data;
+    } catch (err) {
+      showError(err);
+      return false;
+    }
+  },
+
+  async completeOrder(orderId) {
+    try {
+      await patch(endpoints.orders.completeOrder.replace("{orderId}", orderId));
+
+      return true;
     } catch (err) {
       showError(err);
       return false;
