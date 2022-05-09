@@ -230,7 +230,7 @@ const ProductDetail = view(() => {
               right={`${
                 product?.frontCameraMp
                   ? product?.frontCameraMp + " Мп."
-                  : "нету"
+                  : "отсутствует"
               }`}
             />
           </Block>
@@ -271,17 +271,17 @@ const ProductDetail = view(() => {
           <Block header="Мобильная  связь">
             <Field
               left="Поддержка сетей 3G"
-              right={`${product?.support3G ? "есть" : "нету"}`}
+              right={`${product?.support3G ? "есть" : "отсутствует"}`}
             />
 
             <Field
               left="Поддержка сетей 4G (LTE)"
-              right={`${product?.supportLte ? "есть" : "нету"}`}
+              right={`${product?.supportLte ? "есть" : "отсутствует"}`}
             />
 
             <Field
               left="Поддержка сетей 5G"
-              right={`${product?.support5G ? "есть" : "нету"}`}
+              right={`${product?.support5G ? "есть" : "отсутствует"}`}
             />
 
             <Field left="Формат SIM-карт" right={`${product?.formatSim}`} />
@@ -293,7 +293,7 @@ const ProductDetail = view(() => {
 
             <Field
               left="Поддержка eSIM"
-              right={`${product?.supportESim ? "есть" : "нету"}`}
+              right={`${product?.supportESim ? "есть" : "отсутствует"}`}
             />
           </Block>
 
@@ -309,7 +309,10 @@ const ProductDetail = view(() => {
 
             <Field left="Стандарт Wi-Fi" right={`${product?.standardWiFi}`} />
 
-            <Field left="NFC" right={`${product?.NFC ? "есть" : "нету"}`} />
+            <Field
+              left="NFC"
+              right={`${product?.NFC ? "есть" : "отсутствует"}`}
+            />
           </Block>
 
           <Block header="Питание">
@@ -320,12 +323,14 @@ const ProductDetail = view(() => {
 
             <Field
               left="Поддержка быстрой зарядки"
-              right={`${product?.supportQuickCharger ? "есть" : "нету"}`}
+              right={`${product?.supportQuickCharger ? "есть" : "отсутствует"}`}
             />
 
             <Field
               left="Поддержка беспроводной зарядки"
-              right={`${product?.supportWirelessCharger ? "есть" : "нету"}`}
+              right={`${
+                product?.supportWirelessCharger ? "есть" : "отсутствует"
+              }`}
             />
           </Block>
         </div>

@@ -149,7 +149,9 @@ const DetailInformation = () => {
           <Field
             left="Фронтальная камера"
             right={`${
-              detail?.frontCameraMp ? detail?.frontCameraMp + " Мп." : "нету"
+              detail?.frontCameraMp
+                ? detail?.frontCameraMp + " Мп."
+                : "отсутствует"
             }`}
           />
 
@@ -157,7 +159,9 @@ const DetailInformation = () => {
 
           <Field
             left="Поддержка Google Mobile Services"
-            right={`${detail?.supportGoogleMobileService ? "есть" : "нет"}`}
+            right={`${
+              detail?.supportGoogleMobileService ? "есть" : "отсутствует"
+            }`}
           />
 
           <Field
@@ -186,17 +190,17 @@ const DetailInformation = () => {
 
           <Field
             left="Поддержка сетей 3G"
-            right={`${detail?.support3G ? "есть" : "нету"}`}
+            right={`${detail?.support3G ? "есть" : "отсутствует"}`}
           />
 
           <Field
             left="Поддержка сетей 4G (LTE)"
-            right={`${detail?.supportLte ? "есть" : "нету"}`}
+            right={`${detail?.supportLte ? "есть" : "отсутствует"}`}
           />
 
           <Field
             left="Поддержка сетей 5G"
-            right={`${detail?.support5G ? "есть" : "нету"}`}
+            right={`${detail?.support5G ? "есть" : "отсутствует"}`}
           />
 
           <Field left="Формат SIM-карт" right={`${detail?.formatSim}`} />
@@ -208,7 +212,7 @@ const DetailInformation = () => {
 
           <Field
             left="Поддержка eSIM"
-            right={`${detail?.supportESim ? "есть" : "нету"}`}
+            right={`${detail?.supportESim ? "есть" : "отсутствует"}`}
           />
           <Field left="Интерфейс" right={`${detail?.cableInterface}`} />
 
@@ -219,7 +223,7 @@ const DetailInformation = () => {
 
           <Field left="Стандарт Wi-Fi" right={`${detail?.standardWiFi}`} />
 
-          <Field left="NFC" right={`${detail?.NFC ? "есть" : "нету"}`} />
+          <Field left="NFC" right={`${detail?.NFC ? "есть" : "отсутствует"}`} />
 
           <Field
             left="Емкость аккумулятора "
@@ -228,12 +232,12 @@ const DetailInformation = () => {
 
           <Field
             left="Поддержка быстрой зарядки"
-            right={`${detail?.supportQuickCharger ? "есть" : "нету"}`}
+            right={`${detail?.supportQuickCharger ? "есть" : "отсутствует"}`}
           />
 
           <Field
             left="Поддержка беспроводной зарядки"
-            right={`${detail?.supportWirelessCharger ? "есть" : "нету"}`}
+            right={`${detail?.supportWirelessCharger ? "есть" : "отсутствует"}`}
           />
 
           <div
