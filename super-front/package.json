@@ -25,6 +25,7 @@
   },
   "scripts": {
     "start": "set PORT=8000 && react-scripts start",
+    "start:mac": "export PORT=8000 && react-scripts start",
     "build": "react-scripts build"
   },
   "eslintConfig": {
