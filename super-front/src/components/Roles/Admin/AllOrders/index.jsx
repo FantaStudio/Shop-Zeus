@@ -1,12 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { LinearProgress } from "@material-ui/core";
+import { DialogActions, LinearProgress } from "@material-ui/core";
 import { green, orange } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import { Check, Warning } from "@material-ui/icons";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import orders from "../../../../store/orders";
+import Alert from "../../../System/Alert";
 import SearchField from "../../../System/SearchField";
+import ZeusButton from "./../../../System/ZeusButton";
 import ZeusTable from "./../../../System/ZeusTable";
 
 const useStyles = makeStyles({
@@ -158,8 +160,87 @@ const AllOrders = () => {
           );
         },
       },
+
+      {
+        Header: "-",
+        disableSortBy: true,
+        accessor: (rowData) => {
+          const Actions = ({ rowData }) => {
+            const [loading, setLoading] = useState(false);
+            const [open, setOpen] = useState(false);
+
+            const complete = useCallback(async () => {
+              setLoading(true);
+
+              const result = await orders.completeOrder(rowData?.orderId);
+
+              if (result) {
+                fetcher({});
+                setOpen(false);
+              }
+
+              setLoading(false);
+            }, [rowData?.orderId]);
+
+            return rowData?.execute ? null : (
+              <>
+                <a
+                  onClick={() => {
+                    if (loading) {
+                      return;
+                    }
+
+                    setOpen(true);
+                  }}
+                >
+                  Подтвердить доставку заказа
+                </a>
+
+                <Alert
+                  open={open}
+                  setOpen={setOpen}
+                  content={
+                    <div>
+                      <p>Вы уверены, что заказ был доставлен ?</p>
+
+                      <DialogActions>
+                        <ZeusButton
+                          onClick={() => setOpen(false)}
+                          loading={loading}
+                          disabled={loading}
+                        >
+                          Нет
+                        </ZeusButton>
+                        <ZeusButton
+                          loading={loading}
+                          disabled={loading}
+                          style={{
+                            backgroundColor: green[600],
+                            marginLeft: "1rem",
+                          }}
+                          onClick={complete}
+                        >
+                          Да
+                        </ZeusButton>
+                      </DialogActions>
+                    </div>
+                  }
+                />
+              </>
+            );
+          };
+
+          return <Actions rowData={rowData} />;
+        },
+      },
     ];
-  }, [classes.done, classes.iconExecute, classes.notDone, classes.text]);
+  }, [
+    classes.done,
+    classes.iconExecute,
+    classes.notDone,
+    classes.text,
+    fetcher,
+  ]);
 
   const memoData = useMemo(() => {
     return items;
@@ -190,7 +271,7 @@ const AllOrders = () => {
         />
         <div style={{ height: 15 }} />
 
-        <a onClick={downloadCsv}>Экспортировать текущую заказы в csv</a>
+        <a onClick={downloadCsv}>Экспортировать текущие заказы в csv</a>
 
         <div style={{ height: 15 }} />
 

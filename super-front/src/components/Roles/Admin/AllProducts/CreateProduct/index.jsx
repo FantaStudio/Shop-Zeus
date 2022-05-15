@@ -1,4 +1,4 @@
-import { green } from "@material-ui/core/colors";
+import { green, grey } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import numbro from "numbro";
 import React, { useCallback, useState } from "react";
@@ -109,7 +109,11 @@ const CreateProduct = () => {
 
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <ZeusButton
-            style={{ backgroundColor: green[600] }}
+            style={
+              !file || loading
+                ? { backgroundColor: grey[200] }
+                : { backgroundColor: green[600] }
+            }
             onClick={form.handleSubmit(confirm)}
             loading={loading}
             disabled={!file || loading}

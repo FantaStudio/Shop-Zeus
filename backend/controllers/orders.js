@@ -18,7 +18,7 @@ class orders {
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
-          message: "Регистрация не удалась",
+          message: "Создание не удалось",
           description: errors?.errors[0]?.msg,
         });
       }
@@ -53,6 +53,33 @@ class orders {
       return res
         .status(400)
         .json({ message: "Создание заказа не удалось", description: "" });
+    }
+  }
+
+  async completeOrder(req, res) {
+    try {
+      const { orderId } = req.params;
+
+      const order = await Order.findById(orderId).exec();
+
+      if (!order) {
+        return res.status(400).json({
+          message: "Возникла ошибка",
+          description: "Такой заказ не найден",
+        });
+      }
+
+      order.execute = true;
+
+      await order.save();
+
+      return res.status(200).json(order);
+    } catch (err) {
+      console.log(err);
+
+      return res
+        .status(400)
+        .json({ message: "Завершение заказа не удалось", description: "" });
     }
   }
 

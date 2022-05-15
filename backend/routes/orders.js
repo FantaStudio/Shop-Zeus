@@ -32,4 +32,10 @@ router.get(
   controller.fetchOrdersByAdminCsv
 );
 
+router.patch(
+  `/api/v1/admin/orders/:orderId`,
+  roleMiddleware(["Admin"]),
+  controller.completeOrder
+);
+
 module.exports = router;
