@@ -1,5 +1,6 @@
 import { green } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
+import numbro from "numbro";
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
@@ -201,8 +202,14 @@ const ProductEditable = () => {
       const keys = Object?.keys(values);
 
       keys.forEach((key) => {
-        if (values?.[key] !== undefined && values?.[key] !== detail?.[key]) {
-          payload[key] = values[key];
+        if (key === "price") {
+          if (values?.[key] !== undefined && values?.[key] !== detail?.[key]) {
+            payload[key] = numbro.unformat(values[key]);
+          }
+        } else {
+          if (values?.[key] !== undefined && values?.[key] !== detail?.[key]) {
+            payload[key] = values[key];
+          }
         }
       });
 
