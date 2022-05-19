@@ -75,7 +75,7 @@ const useStyles = makeStyles({
     flexFlow: "row wrap",
   },
   block: {
-    marginRight: "1.2rem",
+    marginRight: "2.2rem",
     maxWidth: 300,
     width: "100%",
     wordBreak: "break-all",
