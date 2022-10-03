@@ -28,7 +28,7 @@ const Logo = view(() => {
                 }
             >
                 <img
-                    src="/images/logotip.svg"
+                    src="/images/Logotip.svg"
                     alt="logo"
                     className={classes.image}
                 />
