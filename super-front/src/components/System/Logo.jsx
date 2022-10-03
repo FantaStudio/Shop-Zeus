@@ -5,30 +5,36 @@ import { Link } from "react-router-dom";
 import auth from "../../store/auth";
 
 const useStyles = makeStyles({
-  root: {
-    width: 120,
-    height: "auto",
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-  },
+    root: {
+        width: 120,
+        height: "auto",
+    },
+    image: {
+        width: "100%",
+        height: "100%",
+    },
 });
 
 const Logo = view(() => {
-  const classes = useStyles();
+    const classes = useStyles();
 
-  return (
-    <div className={classes.root}>
-      <Link
-        to={
-          auth?.profile?.roles?.includes("Admin") ? "/admin/all-clients" : "/"
-        }
-      >
-        <img src="/images/logotip.png" alt="logo" className={classes.image} />
-      </Link>
-    </div>
-  );
+    return (
+        <div className={classes.root}>
+            <Link
+                to={
+                    auth?.profile?.roles?.includes("Admin")
+                        ? "/admin/all-clients"
+                        : "/"
+                }
+            >
+                <img
+                    src="/images/logotip.svg"
+                    alt="logo"
+                    className={classes.image}
+                />
+            </Link>
+        </div>
+    );
 });
 
 export default Logo;
