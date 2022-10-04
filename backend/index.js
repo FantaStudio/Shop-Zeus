@@ -24,7 +24,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/static", express.static("public"));
+app.use("/static", express.static(path.join(__dirname, "public")));
 
 app.use(productsRoutes);
 app.use(authRoutes);

@@ -1,4 +1,4 @@
-const url_backend = "https://shop-zeus-back.vercel.app/api";
+const url_backend = `${process.env.REACT_APP_URL_BACKEND}/api`;
 
 export const endpoints = {
     auth: {
